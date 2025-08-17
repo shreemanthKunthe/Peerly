@@ -124,27 +124,27 @@ export default function Index() {
             Get Started
           </button>
 
-          {/* Floating Image Cards */}
-          <div className="absolute inset-0 pointer-events-none">
+          {/* Floating Image Cards - Hidden on mobile */}
+          <div className="absolute inset-0 pointer-events-none hidden lg:block">
             <div className="absolute top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 rotate-[-24deg] animate-float">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/55b82bf5cc275e3968860138472d98b3509ebbfd?width=477" 
-                   alt="Photography" className="w-48 h-48 rounded-3xl shadow-2xl" />
+              <img src="https://api.builder.io/api/v1/image/assets/TEMP/55b82bf5cc275e3968860138472d98b3509ebbfd?width=477"
+                   alt="Photography" className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl" />
             </div>
             <div className="absolute top-1/3 right-1/4 transform translate-x-1/2 -translate-y-1/2 rotate-[20deg] animate-float animation-delay-1000">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/c30327ca5956043ac2f1df33252d86e3b5d701d4?width=477" 
-                   alt="Coding" className="w-48 h-48 rounded-3xl shadow-2xl" />
+              <img src="https://api.builder.io/api/v1/image/assets/TEMP/c30327ca5956043ac2f1df33252d86e3b5d701d4?width=477"
+                   alt="Coding" className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl" />
             </div>
             <div className="absolute bottom-1/4 left-1/3 transform -translate-x-1/2 translate-y-1/2 rotate-[-51deg] animate-float animation-delay-2000">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/407f48c6267594929c96221d2cb3cc572e06910f?width=477" 
-                   alt="Editing" className="w-48 h-48 rounded-3xl shadow-2xl" />
+              <img src="https://api.builder.io/api/v1/image/assets/TEMP/407f48c6267594929c96221d2cb3cc572e06910f?width=477"
+                   alt="Editing" className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl" />
             </div>
             <div className="absolute bottom-1/3 right-1/3 transform translate-x-1/2 translate-y-1/2 rotate-[47deg] animate-float animation-delay-1500">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/8a08097494c0d9141095879db567ec98d81e5022?width=477" 
-                   alt="Film and TV" className="w-48 h-48 rounded-3xl shadow-2xl" />
+              <img src="https://api.builder.io/api/v1/image/assets/TEMP/8a08097494c0d9141095879db567ec98d81e5022?width=477"
+                   alt="Film and TV" className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl" />
             </div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-float animation-delay-500">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/876de79f0a42553bbacf6315335dd7a6036d8e3b?width=477" 
-                   alt="College" className="w-48 h-48 rounded-3xl shadow-2xl" />
+              <img src="https://api.builder.io/api/v1/image/assets/TEMP/876de79f0a42553bbacf6315335dd7a6036d8e3b?width=477"
+                   alt="College" className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl" />
             </div>
           </div>
         </div>
