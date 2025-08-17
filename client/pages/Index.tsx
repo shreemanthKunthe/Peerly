@@ -206,9 +206,9 @@ export default function Index() {
 
 
       {/* Call to Action Section */}
-      <section className="relative z-10 py-24 lg:py-32 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800">
+      <section className="relative z-10 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 animate-fade-in-up text-blue-400">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 animate-fade-in-up text-blue-500">
             Ready to Learn? Start Sharing Skills Today!
           </h2>
           <p className="text-xl lg:text-2xl mb-12 text-white max-w-4xl mx-auto animate-fade-in-up animation-delay-200">
