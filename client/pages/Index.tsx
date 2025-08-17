@@ -154,7 +154,7 @@ export default function Index() {
       <section id="how-it-works" className="relative z-10 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16">
-            <h2 className="text-6xl lg:text-8xl font-bold mb-8 animate-fade-in-up">How it works</h2>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 animate-fade-in-up">How it works</h2>
             <p className="text-xl lg:text-2xl text-white/90 max-w-4xl animate-fade-in-up animation-delay-200">
               Peerly makes learning simple: set up your profile, get matched with the right peers, and grow by sharing skills together.
             </p>
