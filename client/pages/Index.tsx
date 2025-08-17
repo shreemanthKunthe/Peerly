@@ -45,15 +45,6 @@ export default function Index() {
               <button onClick={() => scrollToSection('how-it-works')} className="text-white hover:text-purple-400 transition-colors">
                 How It Works
               </button>
-              <button onClick={() => scrollToSection('features')} className="text-white hover:text-purple-400 transition-colors">
-                Features
-              </button>
-              <button onClick={() => scrollToSection('community')} className="text-white hover:text-purple-400 transition-colors">
-                Community
-              </button>
-              <button onClick={() => scrollToSection('bookings')} className="text-white hover:text-purple-400 transition-colors">
-                Bookings
-              </button>
               <button onClick={() => scrollToSection('about')} className="text-white hover:text-purple-400 transition-colors">
                 About
               </button>
@@ -85,15 +76,6 @@ export default function Index() {
               <div className="flex flex-col space-y-4">
                 <button onClick={() => scrollToSection('how-it-works')} className="text-left text-white hover:text-purple-400">
                   How It Works
-                </button>
-                <button onClick={() => scrollToSection('features')} className="text-left text-white hover:text-purple-400">
-                  Features
-                </button>
-                <button onClick={() => scrollToSection('community')} className="text-left text-white hover:text-purple-400">
-                  Community
-                </button>
-                <button onClick={() => scrollToSection('bookings')} className="text-left text-white hover:text-purple-400">
-                  Bookings
                 </button>
                 <button onClick={() => scrollToSection('about')} className="text-left text-white hover:text-purple-400">
                   About
@@ -222,57 +204,24 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="relative z-10 py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-16 animate-fade-in-up">Features</h2>
-          <p className="text-xl text-white/90 mb-8 animate-fade-in-up animation-delay-200">
-            Coming soon - Exciting features to enhance your learning experience
-          </p>
-        </div>
-      </section>
-
-      {/* Community Section */}
-      <section id="community" className="relative z-10 py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-16 animate-fade-in-up">Community</h2>
-          <p className="text-xl text-white/90 mb-8 animate-fade-in-up animation-delay-200">
-            Join our growing community of learners and educators
-          </p>
-        </div>
-      </section>
-
-      {/* Bookings Section */}
-      <section id="bookings" className="relative z-10 py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-16 animate-fade-in-up">Bookings</h2>
-          <p className="text-xl text-white/90 mb-8 animate-fade-in-up animation-delay-200">
-            Schedule your learning sessions with ease
-          </p>
-        </div>
-      </section>
 
       {/* Call to Action Section */}
       <section className="relative z-10 py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative rounded-3xl overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/90 to-indigo-600/90" />
-            <div className="relative px-8 py-16 lg:px-16 lg:py-24 text-center">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 animate-fade-in-up">
-                Ready to Learn? Start Sharing Skills Today!
-              </h2>
-              <p className="text-xl lg:text-2xl mb-12 text-white/90 max-w-4xl mx-auto animate-fade-in-up animation-delay-200">
-                Grow, learn, and share with like-minded people. Master skills, get guidance, or teach others — with Peerly, knowledge grows stronger together.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up animation-delay-400">
-                <button className="bg-white text-black px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg">
-                  Get Started
-                </button>
-                <button className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:bg-white hover:text-black">
-                  Join the Community
-                </button>
-              </div>
-            </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/40 to-indigo-600/40" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 animate-fade-in-up">
+            Ready to Learn? Start Sharing Skills Today!
+          </h2>
+          <p className="text-xl lg:text-2xl mb-12 text-white/90 max-w-4xl mx-auto animate-fade-in-up animation-delay-200">
+            Grow, learn, and share with like-minded people. Master skills, get guidance, or teach others — with Peerly, knowledge grows stronger together.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up animation-delay-400">
+            <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25">
+              Get Started
+            </button>
+            <button className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:bg-white hover:text-black">
+              Join the Community
+            </button>
           </div>
         </div>
       </section>
