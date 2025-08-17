@@ -225,7 +225,7 @@ export default function Index() {
       {/* Features Section */}
       <section id="features" className="relative z-10 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-6xl lg:text-8xl font-bold mb-16 animate-fade-in-up">Features</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-16 animate-fade-in-up">Features</h2>
           <p className="text-xl text-white/90 mb-8 animate-fade-in-up animation-delay-200">
             Coming soon - Exciting features to enhance your learning experience
           </p>
@@ -235,7 +235,7 @@ export default function Index() {
       {/* Community Section */}
       <section id="community" className="relative z-10 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-6xl lg:text-8xl font-bold mb-16 animate-fade-in-up">Community</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-16 animate-fade-in-up">Community</h2>
           <p className="text-xl text-white/90 mb-8 animate-fade-in-up animation-delay-200">
             Join our growing community of learners and educators
           </p>
@@ -245,7 +245,7 @@ export default function Index() {
       {/* Bookings Section */}
       <section id="bookings" className="relative z-10 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-6xl lg:text-8xl font-bold mb-16 animate-fade-in-up">Bookings</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-16 animate-fade-in-up">Bookings</h2>
           <p className="text-xl text-white/90 mb-8 animate-fade-in-up animation-delay-200">
             Schedule your learning sessions with ease
           </p>
@@ -258,7 +258,7 @@ export default function Index() {
           <div className="relative rounded-3xl overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-600/90 to-indigo-600/90" />
             <div className="relative px-8 py-16 lg:px-16 lg:py-24 text-center">
-              <h2 className="text-4xl lg:text-6xl font-bold mb-8 animate-fade-in-up">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 animate-fade-in-up">
                 Ready to Learn? Start Sharing Skills Today!
               </h2>
               <p className="text-xl lg:text-2xl mb-12 text-white/90 max-w-4xl mx-auto animate-fade-in-up animation-delay-200">
