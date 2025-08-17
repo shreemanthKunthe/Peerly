@@ -198,7 +198,7 @@ export default function Index() {
       {/* About Us Section */}
       <section id="about" className="relative z-10 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-6xl lg:text-8xl font-bold mb-16 animate-fade-in-up">About us</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-16 animate-fade-in-up">About us</h2>
           
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <div className="animate-fade-in-up animation-delay-200">
