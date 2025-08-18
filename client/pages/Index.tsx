@@ -210,7 +210,7 @@ export default function Index() {
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <div className="space-y-8 animate-fade-in-up animation-delay-200">
               <p className="text-xl lg:text-2xl leading-relaxed text-white/90">
-                I'm Anirudh Kulkarni, a developer working on Peerly — a community where students and professionals connect to share skills, exchange knowledge, and grow together.
+                I'm Anirudh Kulkarni, a developer working on Peerly. What started as a simple idea has grown into a platform built on collaboration, curiosity, and community. At Peerly, students and professionals come together to share skills, exchange knowledge, and learn from one another — making growth a collective journey rather than a solo one.
               </p>
 
               <div className="pt-8">
