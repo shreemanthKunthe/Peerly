@@ -204,6 +204,30 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Anirudh Section */}
+      <section className="relative z-10 py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <div className="space-y-8 animate-fade-in-up animation-delay-200">
+              <p className="text-xl lg:text-2xl leading-relaxed text-white/90">
+                I'm Anirudh Kulkarni, a developer working on Peerly — a community where students and professionals connect to share skills, exchange knowledge, and grow together.
+              </p>
+
+              <div className="pt-8">
+                <h3 className="text-4xl lg:text-5xl font-bold mb-4">Contact</h3>
+                <p className="text-xl text-white/90">
+                  Email ID : anirudh.kulkarni2382004@gmail.com
+                </p>
+              </div>
+            </div>
+
+            <div className="animate-fade-in-up animation-delay-400">
+              <img src="https://cdn.builder.io/api/v1/image/assets%2Fff2e6c54d3c244c59f587dda5e373ea2%2F2983141e352c44b6a40aadb395904d96?format=webp&width=800"
+                   alt="Anirudh Kulkarni" className="w-full rounded-2xl shadow-2xl" />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Call to Action Section */}
       <section className="relative z-10 py-24 lg:py-32">
