@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 export default function Index() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,15 +10,15 @@ export default function Index() {
     const handleScroll = () => {
       setIsNavbarScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Smooth scroll function
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     setIsMenuOpen(false);
   };
@@ -32,9 +32,11 @@ export default function Index() {
       </div>
 
       {/* Navbar */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isNavbarScrolled ? 'py-2 backdrop-blur-md bg-black/50' : 'py-4'
-      }`}>
+      <nav
+        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+          isNavbarScrolled ? "py-2 backdrop-blur-md bg-black/50" : "py-4"
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -42,10 +44,16 @@ export default function Index() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
-              <button onClick={() => scrollToSection('how-it-works')} className="text-white hover:text-purple-400 transition-colors">
+              <button
+                onClick={() => scrollToSection("how-it-works")}
+                className="text-white hover:text-purple-400 transition-colors"
+              >
                 How It Works
               </button>
-              <button onClick={() => scrollToSection('about')} className="text-white hover:text-purple-400 transition-colors">
+              <button
+                onClick={() => scrollToSection("about")}
+                className="text-white hover:text-purple-400 transition-colors"
+              >
                 About
               </button>
             </div>
@@ -62,7 +70,7 @@ export default function Index() {
             </div>
 
             {/* Mobile Menu Button */}
-            <button 
+            <button
               className="lg:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
@@ -74,10 +82,16 @@ export default function Index() {
           {isMenuOpen && (
             <div className="lg:hidden mt-4 py-4 border-t border-gray-800">
               <div className="flex flex-col space-y-4">
-                <button onClick={() => scrollToSection('how-it-works')} className="text-left text-white hover:text-purple-400">
+                <button
+                  onClick={() => scrollToSection("how-it-works")}
+                  className="text-left text-white hover:text-purple-400"
+                >
                   How It Works
                 </button>
-                <button onClick={() => scrollToSection('about')} className="text-left text-white hover:text-purple-400">
+                <button
+                  onClick={() => scrollToSection("about")}
+                  className="text-left text-white hover:text-purple-400"
+                >
                   About
                 </button>
                 <button className="px-6 py-2 border border-white rounded w-fit">
@@ -97,9 +111,11 @@ export default function Index() {
             <br />
             Grow Together
           </h1>
-          
+
           <p className="text-lg sm:text-xl max-w-4xl mx-auto mb-12 text-white/90 animate-fade-in-up animation-delay-200">
-            Peerly connects students and professionals through peer-to-peer sessions. Share your skills, get help when you're stuck, and grow in a community that believes knowledge gets stronger when it's shared.
+            Peerly connects students and professionals through peer-to-peer
+            sessions. Share your skills, get help when you're stuck, and grow in
+            a community that believes knowledge gets stronger when it's shared.
           </p>
 
           <button className="bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 animate-fade-in-up animation-delay-400">
@@ -109,24 +125,39 @@ export default function Index() {
           {/* Floating Image Cards - Hidden on mobile */}
           <div className="absolute inset-0 pointer-events-none hidden lg:block">
             <div className="absolute top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 rotate-[-24deg] animate-float">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/55b82bf5cc275e3968860138472d98b3509ebbfd?width=477"
-                   alt="Photography" className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl" />
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/55b82bf5cc275e3968860138472d98b3509ebbfd?width=477"
+                alt="Photography"
+                className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl"
+              />
             </div>
             <div className="absolute top-1/3 right-1/4 transform translate-x-1/2 -translate-y-1/2 rotate-[20deg] animate-float animation-delay-1000">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/c30327ca5956043ac2f1df33252d86e3b5d701d4?width=477"
-                   alt="Coding" className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl" />
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/c30327ca5956043ac2f1df33252d86e3b5d701d4?width=477"
+                alt="Coding"
+                className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl"
+              />
             </div>
             <div className="absolute bottom-1/4 left-1/3 transform -translate-x-1/2 translate-y-1/2 rotate-[-51deg] animate-float animation-delay-2000">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/407f48c6267594929c96221d2cb3cc572e06910f?width=477"
-                   alt="Editing" className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl" />
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/407f48c6267594929c96221d2cb3cc572e06910f?width=477"
+                alt="Editing"
+                className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl"
+              />
             </div>
             <div className="absolute bottom-1/3 right-1/3 transform translate-x-1/2 translate-y-1/2 rotate-[47deg] animate-float animation-delay-1500">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/8a08097494c0d9141095879db567ec98d81e5022?width=477"
-                   alt="Film and TV" className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl" />
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/8a08097494c0d9141095879db567ec98d81e5022?width=477"
+                alt="Film and TV"
+                className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl"
+              />
             </div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-float animation-delay-500">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/876de79f0a42553bbacf6315335dd7a6036d8e3b?width=477"
-                   alt="College" className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl" />
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/876de79f0a42553bbacf6315335dd7a6036d8e3b?width=477"
+                alt="College"
+                className="w-32 h-32 xl:w-48 xl:h-48 rounded-3xl shadow-2xl"
+              />
             </div>
           </div>
         </div>
@@ -136,9 +167,12 @@ export default function Index() {
       <section id="how-it-works" className="relative z-10 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 animate-fade-in-up">How it works</h2>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 animate-fade-in-up">
+              How it works
+            </h2>
             <p className="text-xl lg:text-2xl text-white/90 max-w-4xl animate-fade-in-up animation-delay-200">
-              Peerly makes learning simple: set up your profile, get matched with the right peers, and grow by sharing skills together.
+              Peerly makes learning simple: set up your profile, get matched
+              with the right peers, and grow by sharing skills together.
             </p>
           </div>
 
@@ -146,32 +180,44 @@ export default function Index() {
             <div className="space-y-16">
               {/* Step 1 */}
               <div className="animate-fade-in-up animation-delay-400">
-                <h3 className="text-2xl lg:text-3xl font-medium mb-4">Create Your Profile</h3>
+                <h3 className="text-2xl lg:text-3xl font-medium mb-4">
+                  Create Your Profile
+                </h3>
                 <p className="text-lg text-white/80">
-                  Sign up and set up your skill profile — what you know and what you want to learn.
+                  Sign up and set up your skill profile — what you know and what
+                  you want to learn.
                 </p>
               </div>
 
               {/* Step 2 */}
               <div className="animate-fade-in-up animation-delay-600">
-                <h3 className="text-2xl lg:text-3xl font-medium mb-4">Match with Peers</h3>
+                <h3 className="text-2xl lg:text-3xl font-medium mb-4">
+                  Match with Peers
+                </h3>
                 <p className="text-lg text-white/80">
-                  Our smart system connects you with people who complement your skills and learning goals.
+                  Our smart system connects you with people who complement your
+                  skills and learning goals.
                 </p>
               </div>
 
               {/* Step 3 */}
               <div className="animate-fade-in-up animation-delay-800">
-                <h3 className="text-2xl lg:text-3xl font-medium mb-4">Start Learning Together</h3>
+                <h3 className="text-2xl lg:text-3xl font-medium mb-4">
+                  Start Learning Together
+                </h3>
                 <p className="text-lg text-white/80">
-                  Schedule peer sessions, exchange knowledge, and grow together — no tutors, just peers.
+                  Schedule peer sessions, exchange knowledge, and grow together
+                  — no tutors, just peers.
                 </p>
               </div>
             </div>
 
             <div className="animate-fade-in-up animation-delay-1000">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/0be1e881fdc10633edfb2f16b42211466e33c00c?width=1224" 
-                   alt="Student in library" className="w-full rounded-2xl shadow-2xl" />
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/0be1e881fdc10633edfb2f16b42211466e33c00c?width=1224"
+                alt="Student in library"
+                className="w-full rounded-2xl shadow-2xl"
+              />
             </div>
           </div>
         </div>
@@ -180,17 +226,28 @@ export default function Index() {
       {/* About Us Section */}
       <section id="about" className="relative z-10 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-16 animate-fade-in-up">About us</h2>
-          
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-16 animate-fade-in-up">
+            About us
+          </h2>
+
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <div className="animate-fade-in-up animation-delay-200">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/aedeba38c394ddb0a7735233338c6455b8acdd5f?width=840" 
-                   alt="Shreemanth K" className="w-full rounded-2xl shadow-2xl" />
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/aedeba38c394ddb0a7735233338c6455b8acdd5f?width=840"
+                alt="Shreemanth K"
+                className="w-full rounded-2xl shadow-2xl"
+              />
             </div>
 
             <div className="space-y-8 animate-fade-in-up animation-delay-400">
               <p className="text-xl lg:text-2xl leading-relaxed text-white/90">
-                Hi, I'm Shreemanth K, the creator of Peerly. What began as a simple side project quickly turned into something bigger — the belief that learning is better when we do it together. Peerly is designed to connect students and professionals so they can share skills, exchange knowledge, and grow as a community. It's more than just a platform — it's a movement towards collaboration, curiosity, and growth.
+                Hi, I'm Shreemanth K, the creator of Peerly. What began as a
+                simple side project quickly turned into something bigger — the
+                belief that learning is better when we do it together. Peerly is
+                designed to connect students and professionals so they can share
+                skills, exchange knowledge, and grow as a community. It's more
+                than just a platform — it's a movement towards collaboration,
+                curiosity, and growth.
               </p>
 
               <div className="pt-8">
@@ -210,7 +267,12 @@ export default function Index() {
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <div className="space-y-8 animate-fade-in-up animation-delay-200">
               <p className="text-xl lg:text-2xl leading-relaxed text-white/90">
-                I'm Anirudh Kulkarni, a developer working on Peerly. What started as a simple idea has grown into a platform built on collaboration, curiosity, and community. At Peerly, students and professionals come together to share skills, exchange knowledge, and learn from one another — making growth a collective journey rather than a solo one.
+                I'm Anirudh Kulkarni, a developer working on Peerly. What
+                started as a simple idea has grown into a platform built on
+                collaboration, curiosity, and community. At Peerly, students and
+                professionals come together to share skills, exchange knowledge,
+                and learn from one another — making growth a collective journey
+                rather than a solo one.
               </p>
 
               <div className="pt-8">
@@ -222,8 +284,11 @@ export default function Index() {
             </div>
 
             <div className="animate-fade-in-up animation-delay-400">
-              <img src="https://cdn.builder.io/api/v1/image/assets%2Fff2e6c54d3c244c59f587dda5e373ea2%2F22ecefb965fc4dff90ff7ba07463f4d1?format=webp&width=800"
-                   alt="Anirudh Kulkarni" className="w-full rounded-2xl shadow-2xl" />
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2Fff2e6c54d3c244c59f587dda5e373ea2%2F22ecefb965fc4dff90ff7ba07463f4d1?format=webp&width=800"
+                alt="Anirudh Kulkarni"
+                className="w-full rounded-2xl shadow-2xl"
+              />
             </div>
           </div>
         </div>
@@ -236,7 +301,9 @@ export default function Index() {
             Ready to Learn? Start Sharing Skills Today!
           </h2>
           <p className="text-xl lg:text-2xl mb-12 text-white max-w-4xl mx-auto animate-fade-in-up animation-delay-200">
-            Grow, learn, and share with like-minded people. Master skills, get guidance, or teach others — with Peerly, knowledge grows stronger together.
+            Grow, learn, and share with like-minded people. Master skills, get
+            guidance, or teach others — with Peerly, knowledge grows stronger
+            together.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up animation-delay-400">
             <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25">
@@ -265,12 +332,36 @@ export default function Index() {
             <div>
               <h4 className="font-semibold mb-4">Links</h4>
               <ul className="space-y-2 text-white/80">
-                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Service</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms & Conditions</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Become a Partner</a></li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    About Us
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Service
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Terms & Conditions
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Become a Partner
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -278,9 +369,21 @@ export default function Index() {
             <div>
               <h4 className="font-semibold mb-4">Social</h4>
               <ul className="space-y-2 text-white/80">
-                <li><a href="#" className="hover:text-white transition-colors">Twitter</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Facebook</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Instagram</a></li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Twitter
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Facebook
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Instagram
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
