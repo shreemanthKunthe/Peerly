@@ -222,7 +222,7 @@ export default function Index() {
             </div>
 
             <div className="animate-fade-in-up animation-delay-400">
-              <img src="https://cdn.builder.io/api/v1/image/assets%2Fff2e6c54d3c244c59f587dda5e373ea2%2F2983141e352c44b6a40aadb395904d96?format=webp&width=800"
+              <img src="https://cdn.builder.io/api/v1/image/assets%2Fff2e6c54d3c244c59f587dda5e373ea2%2F22ecefb965fc4dff90ff7ba07463f4d1?format=webp&width=800"
                    alt="Anirudh Kulkarni" className="w-full rounded-2xl shadow-2xl" />
             </div>
           </div>
