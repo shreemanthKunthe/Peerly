@@ -361,7 +361,7 @@ export default function Index() {
       <section className="relative z-10 py-32 lg:py-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-full">
-            <div className="mb-16">
+            <div className="mb-20">
               <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal leading-tight mb-4 animate-fade-in-up bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
                 Ready to Learn? Start Sharing Skills Today!
               </h2>
