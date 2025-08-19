@@ -118,97 +118,106 @@ export default function Index() {
             a community that believes knowledge gets stronger when it's shared.
           </p>
 
-          <button className="bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 animate-fade-in-up animation-delay-400">
+          <button
+            onClick={() => {
+              // Add your Get Started functionality here
+              console.log('Get Started clicked');
+              // For example: window.location.href = '/signup' or navigate to a signup page
+            }}
+            className="bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 animate-fade-in-up animation-delay-400 cursor-pointer"
+          >
             Get Started
           </button>
 
-          {/* Interactive Flip Cards - Hidden on mobile */}
-          <div className="absolute inset-0 pointer-events-auto hidden lg:block">
-            {/* Photography Card */}
-            <div className="absolute top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 rotate-[-24deg] animate-float">
-              <div className="flip-card w-32 h-32 xl:w-48 xl:h-48 group cursor-pointer perspective-1000">
-                <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
-                  <div className="flip-card-front absolute w-full h-full backface-hidden rounded-3xl shadow-2xl">
-                    <img
-                      src="https://api.builder.io/api/v1/image/assets/TEMP/55b82bf5cc275e3968860138472d98b3509ebbfd?width=477"
-                      alt="Photography"
-                      className="w-full h-full object-cover rounded-3xl"
-                    />
-                  </div>
-                  <div className="flip-card-back absolute w-full h-full backface-hidden rounded-3xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
-                    <span className="text-white font-bold text-sm xl:text-lg text-center px-2">Explore Photography</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Coding Card */}
-            <div className="absolute top-1/3 right-1/4 transform translate-x-1/2 -translate-y-1/2 rotate-[20deg] animate-float animation-delay-1000">
-              <div className="flip-card w-32 h-32 xl:w-48 xl:h-48 group cursor-pointer perspective-1000">
-                <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
-                  <div className="flip-card-front absolute w-full h-full backface-hidden rounded-3xl shadow-2xl">
-                    <img
-                      src="https://api.builder.io/api/v1/image/assets/TEMP/c30327ca5956043ac2f1df33252d86e3b5d701d4?width=477"
-                      alt="Coding"
-                      className="w-full h-full object-cover rounded-3xl"
-                    />
-                  </div>
-                  <div className="flip-card-back absolute w-full h-full backface-hidden rounded-3xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
-                    <span className="text-white font-bold text-sm xl:text-lg text-center px-2">Explore Coding</span>
+          {/* Interactive Flip Cards Grid - Below the button */}
+          <div className="mt-16 relative z-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-items-center max-w-5xl mx-auto">
+              {/* Photography Card */}
+              <div className="transform rotate-[-8deg] animate-float">
+                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+                  <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
+                    <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
+                      <img
+                        src="https://api.builder.io/api/v1/image/assets/TEMP/55b82bf5cc275e3968860138472d98b3509ebbfd?width=477"
+                        alt="Photography"
+                        className="w-full h-full object-cover rounded-2xl"
+                      />
+                    </div>
+                    <div className="flip-card-back absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
+                      <span className="text-white font-bold text-sm text-center px-2">Explore Photography</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Editing Card */}
-            <div className="absolute bottom-1/4 left-1/3 transform -translate-x-1/2 translate-y-1/2 rotate-[-51deg] animate-float animation-delay-2000">
-              <div className="flip-card w-32 h-32 xl:w-48 xl:h-48 group cursor-pointer perspective-1000">
-                <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
-                  <div className="flip-card-front absolute w-full h-full backface-hidden rounded-3xl shadow-2xl">
-                    <img
-                      src="https://api.builder.io/api/v1/image/assets/TEMP/407f48c6267594929c96221d2cb3cc572e06910f?width=477"
-                      alt="Editing"
-                      className="w-full h-full object-cover rounded-3xl"
-                    />
-                  </div>
-                  <div className="flip-card-back absolute w-full h-full backface-hidden rounded-3xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
-                    <span className="text-white font-bold text-sm xl:text-lg text-center px-2">Explore Editing</span>
+              {/* Coding Card */}
+              <div className="transform rotate-[5deg] animate-float animation-delay-500">
+                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+                  <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
+                    <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
+                      <img
+                        src="https://api.builder.io/api/v1/image/assets/TEMP/c30327ca5956043ac2f1df33252d86e3b5d701d4?width=477"
+                        alt="Coding"
+                        className="w-full h-full object-cover rounded-2xl"
+                      />
+                    </div>
+                    <div className="flip-card-back absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
+                      <span className="text-white font-bold text-sm text-center px-2">Explore Coding</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Film and TV Card */}
-            <div className="absolute bottom-1/3 right-1/3 transform translate-x-1/2 translate-y-1/2 rotate-[47deg] animate-float animation-delay-1500">
-              <div className="flip-card w-32 h-32 xl:w-48 xl:h-48 group cursor-pointer perspective-1000">
-                <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
-                  <div className="flip-card-front absolute w-full h-full backface-hidden rounded-3xl shadow-2xl">
-                    <img
-                      src="https://api.builder.io/api/v1/image/assets/TEMP/8a08097494c0d9141095879db567ec98d81e5022?width=477"
-                      alt="Film and TV"
-                      className="w-full h-full object-cover rounded-3xl"
-                    />
-                  </div>
-                  <div className="flip-card-back absolute w-full h-full backface-hidden rounded-3xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
-                    <span className="text-white font-bold text-sm xl:text-lg text-center px-2">Explore Film & TV</span>
+              {/* College Card - Center */}
+              <div className="transform rotate-[-3deg] animate-float animation-delay-200">
+                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+                  <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
+                    <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
+                      <img
+                        src="https://api.builder.io/api/v1/image/assets/TEMP/876de79f0a42553bbacf6315335dd7a6036d8e3b?width=477"
+                        alt="College"
+                        className="w-full h-full object-cover rounded-2xl"
+                      />
+                    </div>
+                    <div className="flip-card-back absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
+                      <span className="text-white font-bold text-sm text-center px-2">Explore Learning</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* College Card */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-float animation-delay-500">
-              <div className="flip-card w-32 h-32 xl:w-48 xl:h-48 group cursor-pointer perspective-1000">
-                <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
-                  <div className="flip-card-front absolute w-full h-full backface-hidden rounded-3xl shadow-2xl">
-                    <img
-                      src="https://api.builder.io/api/v1/image/assets/TEMP/876de79f0a42553bbacf6315335dd7a6036d8e3b?width=477"
-                      alt="College"
-                      className="w-full h-full object-cover rounded-3xl"
-                    />
+              {/* Editing Card */}
+              <div className="transform rotate-[7deg] animate-float animation-delay-800">
+                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+                  <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
+                    <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
+                      <img
+                        src="https://api.builder.io/api/v1/image/assets/TEMP/407f48c6267594929c96221d2cb3cc572e06910f?width=477"
+                        alt="Editing"
+                        className="w-full h-full object-cover rounded-2xl"
+                      />
+                    </div>
+                    <div className="flip-card-back absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
+                      <span className="text-white font-bold text-sm text-center px-2">Explore Editing</span>
+                    </div>
                   </div>
-                  <div className="flip-card-back absolute w-full h-full backface-hidden rounded-3xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
-                    <span className="text-white font-bold text-sm xl:text-lg text-center px-2">Explore Learning</span>
+                </div>
+              </div>
+
+              {/* Film and TV Card */}
+              <div className="transform rotate-[-5deg] animate-float animation-delay-1000">
+                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+                  <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
+                    <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
+                      <img
+                        src="https://api.builder.io/api/v1/image/assets/TEMP/8a08097494c0d9141095879db567ec98d81e5022?width=477"
+                        alt="Film and TV"
+                        className="w-full h-full object-cover rounded-2xl"
+                      />
+                    </div>
+                    <div className="flip-card-back absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
+                      <span className="text-white font-bold text-sm text-center px-2">Explore Film & TV</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -261,7 +270,7 @@ export default function Index() {
                 </h3>
                 <p className="text-lg text-white/80">
                   Schedule peer sessions, exchange knowledge, and grow together
-                  ��� no tutors, just peers.
+                  — no tutors, just peers.
                 </p>
               </div>
             </div>
