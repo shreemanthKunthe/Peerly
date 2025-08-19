@@ -121,7 +121,7 @@ export default function Index() {
           <button
             onClick={() => {
               // Add your Get Started functionality here
-              console.log('Get Started clicked');
+              console.log("Get Started clicked");
               // For example: window.location.href = '/signup' or navigate to a signup page
             }}
             className="bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 animate-fade-in-up animation-delay-400 cursor-pointer"
@@ -144,7 +144,9 @@ export default function Index() {
                       />
                     </div>
                     <div className="flip-card-back absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
-                      <span className="text-white font-bold text-sm text-center px-2">Explore Photography</span>
+                      <span className="text-white font-bold text-sm text-center px-2">
+                        Explore Photography
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -162,7 +164,9 @@ export default function Index() {
                       />
                     </div>
                     <div className="flip-card-back absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
-                      <span className="text-white font-bold text-sm text-center px-2">Explore Coding</span>
+                      <span className="text-white font-bold text-sm text-center px-2">
+                        Explore Coding
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -180,7 +184,9 @@ export default function Index() {
                       />
                     </div>
                     <div className="flip-card-back absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
-                      <span className="text-white font-bold text-sm text-center px-2">Explore Learning</span>
+                      <span className="text-white font-bold text-sm text-center px-2">
+                        Explore Learning
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -198,7 +204,9 @@ export default function Index() {
                       />
                     </div>
                     <div className="flip-card-back absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
-                      <span className="text-white font-bold text-sm text-center px-2">Explore Editing</span>
+                      <span className="text-white font-bold text-sm text-center px-2">
+                        Explore Editing
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -216,7 +224,9 @@ export default function Index() {
                       />
                     </div>
                     <div className="flip-card-back absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 rotate-y-180 flex items-center justify-center shadow-2xl">
-                      <span className="text-white font-bold text-sm text-center px-2">Explore Film & TV</span>
+                      <span className="text-white font-bold text-sm text-center px-2">
+                        Explore Film & TV
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -366,7 +376,9 @@ export default function Index() {
                 Ready to Learn? Start Sharing Skills Today!
               </h2>
               <p className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal leading-tight text-white animate-fade-in-up animation-delay-200">
-                Grow, learn, and share with like-minded people. Master skills, get guidance, or teach others — with Peerly, knowledge grows stronger together
+                Grow, learn, and share with like-minded people. Master skills,
+                get guidance, or teach others — with Peerly, knowledge grows
+                stronger together
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-5 animate-fade-in-up animation-delay-400">
