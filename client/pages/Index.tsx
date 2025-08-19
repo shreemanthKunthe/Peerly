@@ -98,9 +98,12 @@ export default function Index() {
                 >
                   About
                 </button>
-                <button className="px-6 py-2 border border-white rounded w-fit">
+                <Link
+                  to="/signin"
+                  className="px-6 py-2 border border-white rounded w-fit inline-block text-center"
+                >
                   Sign Up
-                </button>
+                </Link>
               </div>
             </div>
           )}
