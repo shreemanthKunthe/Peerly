@@ -358,7 +358,7 @@ export default function Index() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="relative z-10 py-24 lg:py-32">
+      <section className="relative z-10 py-32 lg:py-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-full">
             <div className="mb-16">
