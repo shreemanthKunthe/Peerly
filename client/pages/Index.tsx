@@ -360,12 +360,12 @@ export default function Index() {
       {/* Call to Action Section */}
       <section className="relative z-10 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl">
+          <div className="max-w-full">
             <div className="mb-16">
               <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal leading-tight mb-4 animate-fade-in-up bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
                 Ready to Learn? Start Sharing Skills Today!
               </h2>
-              <p className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal leading-tight text-white animate-fade-in-up animation-delay-200">
+              <p className="text-xl sm:text-2xl lg:text-3xl font-normal leading-relaxed text-white max-w-5xl animate-fade-in-up animation-delay-200">
                 Grow, learn, and share with like-minded people. Master skills, get guidance, or teach others — with Peerly, knowledge grows stronger together
               </p>
             </div>
