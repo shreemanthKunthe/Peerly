@@ -61,9 +61,12 @@ export default function Index() {
 
             {/* Sign Up & Language */}
             <div className="hidden lg:flex items-center space-x-4">
-              <button className="px-6 py-2 border border-white rounded hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105">
+              <Link
+                to="/signin"
+                className="px-6 py-2 border border-white rounded hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105 inline-block text-center"
+              >
                 Sign Up
-              </button>
+              </Link>
               <div className="flex items-center space-x-1 cursor-pointer">
                 <span>EN</span>
                 <ChevronDown size={16} />
