@@ -125,16 +125,12 @@ export default function Index() {
             a community that believes knowledge gets stronger when it's shared.
           </p>
 
-          <button
-            onClick={() => {
-              // Add your Get Started functionality here
-              console.log("Get Started clicked");
-              // For example: window.location.href = '/signup' or navigate to a signup page
-            }}
-            className="bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 animate-fade-in-up animation-delay-400 cursor-pointer"
+          <Link
+            to="/signin"
+            className="bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 animate-fade-in-up animation-delay-400 cursor-pointer inline-block text-center"
           >
             Get Started
-          </button>
+          </Link>
 
           {/* Interactive Flip Cards Grid - Below the button */}
           <div className="mt-16 relative z-10">
