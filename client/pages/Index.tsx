@@ -359,22 +359,24 @@ export default function Index() {
 
       {/* Call to Action Section */}
       <section className="relative z-10 py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 animate-fade-in-up bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-            Ready to Learn? Start Sharing Skills Today!
-          </h2>
-          <p className="text-xl lg:text-2xl mb-12 text-white max-w-4xl mx-auto animate-fade-in-up animation-delay-200">
-            Grow, learn, and share with like-minded people. Master skills, get
-            guidance, or teach others — with Peerly, knowledge grows stronger
-            together.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up animation-delay-400">
-            <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25">
-              Get Started
-            </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-medium hover:scale-105 transition-all duration-300 hover:bg-white hover:text-blue-600">
-              Join the Community
-            </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl">
+            <div className="mb-16">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal leading-tight mb-4 animate-fade-in-up bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                Ready to Learn? Start Sharing Skills Today!
+              </h2>
+              <p className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal leading-tight text-white animate-fade-in-up animation-delay-200">
+                Grow, learn, and share with like-minded people. Master skills, get guidance, or teach others — with Peerly, knowledge grows stronger together
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-5 animate-fade-in-up animation-delay-400">
+              <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded text-sm font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 w-fit">
+                Get Started
+              </button>
+              <button className="border border-blue-600 text-white px-6 py-3 rounded text-sm font-normal hover:scale-105 transition-all duration-300 hover:bg-blue-600 hover:text-white w-fit">
+                Join the Community
+              </button>
+            </div>
           </div>
         </div>
       </section>
