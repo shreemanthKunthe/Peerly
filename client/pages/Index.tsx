@@ -385,9 +385,12 @@ export default function Index() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-5 animate-fade-in-up animation-delay-400">
-              <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded text-sm font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 w-fit">
+              <Link
+                to="/signin"
+                className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded text-sm font-medium hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 w-fit inline-block text-center"
+              >
                 Get Started
-              </button>
+              </Link>
               <button className="border border-blue-600 text-white px-6 py-3 rounded text-sm font-normal hover:scale-105 transition-all duration-300 hover:bg-blue-600 hover:text-white w-fit">
                 Join the Community
               </button>
