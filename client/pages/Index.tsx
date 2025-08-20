@@ -27,6 +27,20 @@ export default function Index() {
     setIsMenuOpen(false);
   };
 
+  // Handle card click with animation
+  const handleCardClick = (cardType: string) => {
+    if (isAnimating) return; // Prevent multiple clicks during animation
+
+    setClickedCard(cardType);
+    setIsAnimating(true);
+
+    // Start the merge animation
+    setTimeout(() => {
+      // Navigate to sign-in after animation completes
+      navigate('/signin');
+    }, 2000); // 2 seconds for animation
+  };
+
   return (
     <div className="min-h-screen bg-black text-white font-instrument overflow-x-hidden">
       {/* Background Gradient */}
