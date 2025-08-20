@@ -23,6 +23,8 @@ export default function SignIn() {
 
   const handleGoogleSignIn = () => {
     console.log("Google sign in");
+    // Simulate successful Google sign-in
+    navigate('/questionnaire');
   };
 
   return (
