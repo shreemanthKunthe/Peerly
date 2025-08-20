@@ -277,8 +277,19 @@ export default function Index() {
               </div>
 
               {/* Film and TV Card */}
-              <div className="transform rotate-[-5deg] animate-float animation-delay-1000">
-                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+              <div className={`transform rotate-[-5deg] animate-float animation-delay-1000 transition-all duration-2000 ${
+                isAnimating && clickedCard !== 'filmtv'
+                  ? 'translate-x-0 translate-y-0 scale-0 opacity-0'
+                  : ''
+              } ${
+                isAnimating && clickedCard === 'filmtv'
+                  ? 'scale-110 z-50'
+                  : ''
+              }`}>
+                <div
+                  className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000"
+                  onClick={() => handleCardClick('filmtv')}
+                >
                   <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
                     <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
                       <img
