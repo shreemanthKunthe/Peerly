@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,6 +12,13 @@ export default function SignIn() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Sign in attempt", { email, password, keepLoggedIn });
+
+    // Simulate successful sign-in
+    // In a real app, you'd validate credentials here
+    if (email && password) {
+      // Redirect to questionnaire page
+      navigate('/questionnaire');
+    }
   };
 
   const handleGoogleSignIn = () => {
