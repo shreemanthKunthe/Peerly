@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Index() {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNavbarScrolled, setIsNavbarScrolled] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [clickedCard, setClickedCard] = useState<string>("");
 
   // Handle navbar scroll effect
   useEffect(() => {
@@ -22,6 +25,67 @@ export default function Index() {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     setIsMenuOpen(false);
+  };
+
+  // Handle card click with animation
+  const handleCardClick = (cardType: string) => {
+    if (isAnimating) return; // Prevent multiple clicks during animation
+
+    setClickedCard(cardType);
+    setIsAnimating(true);
+
+    // Start the merge animation
+    setTimeout(() => {
+      // Navigate to sign-in after animation completes
+      navigate("/signin");
+    }, 2000); // 2 seconds for animation
+  };
+
+  // Calculate merge position for cards moving towards clicked card
+  const getCardMergePosition = (currentCard: string, targetCard: string) => {
+    const cardPositions: { [key: string]: string } = {
+      photography: "translate-x-0 translate-y-0", // First position
+      coding: "translate-x-0 translate-y-0", // Second position
+      college: "translate-x-0 translate-y-0", // Third position (center)
+      editing: "translate-x-0 translate-y-0", // Fourth position
+      filmtv: "translate-x-0 translate-y-0", // Fifth position
+    };
+
+    // Define movement towards each target card
+    const movements: { [key: string]: { [key: string]: string } } = {
+      photography: {
+        coding: "-translate-x-32 lg:-translate-x-40",
+        college: "-translate-x-64 lg:-translate-x-80",
+        editing: "-translate-x-96 lg:-translate-x-120",
+        filmtv: "-translate-x-128 lg:-translate-x-160",
+      },
+      coding: {
+        photography: "translate-x-32 lg:translate-x-40",
+        college: "-translate-x-32 lg:-translate-x-40",
+        editing: "-translate-x-64 lg:-translate-x-80",
+        filmtv: "-translate-x-96 lg:-translate-x-120",
+      },
+      college: {
+        photography: "translate-x-64 lg:translate-x-80",
+        coding: "translate-x-32 lg:translate-x-40",
+        editing: "-translate-x-32 lg:-translate-x-40",
+        filmtv: "-translate-x-64 lg:-translate-x-80",
+      },
+      editing: {
+        photography: "translate-x-96 lg:translate-x-120",
+        coding: "translate-x-64 lg:translate-x-80",
+        college: "translate-x-32 lg:translate-x-40",
+        filmtv: "-translate-x-32 lg:-translate-x-40",
+      },
+      filmtv: {
+        photography: "translate-x-128 lg:translate-x-160",
+        coding: "translate-x-96 lg:translate-x-120",
+        college: "translate-x-64 lg:translate-x-80",
+        editing: "translate-x-32 lg:translate-x-40",
+      },
+    };
+
+    return `${movements[currentCard]?.[targetCard] || ""} scale-75 opacity-80`;
   };
 
   return (
@@ -136,8 +200,21 @@ export default function Index() {
           <div className="mt-16 relative z-10">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-items-center max-w-5xl mx-auto">
               {/* Photography Card */}
-              <div className="transform rotate-[-8deg] animate-float">
-                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+              <div
+                className={`transform rotate-[-8deg] animate-float transition-all duration-2000 ${
+                  isAnimating && clickedCard !== "photography"
+                    ? getCardMergePosition("photography", clickedCard)
+                    : ""
+                } ${
+                  isAnimating && clickedCard === "photography"
+                    ? "scale-110 z-50"
+                    : ""
+                }`}
+              >
+                <div
+                  className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000"
+                  onClick={() => handleCardClick("photography")}
+                >
                   <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
                     <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
                       <img
@@ -156,8 +233,21 @@ export default function Index() {
               </div>
 
               {/* Coding Card */}
-              <div className="transform rotate-[5deg] animate-float animation-delay-500">
-                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+              <div
+                className={`transform rotate-[5deg] animate-float animation-delay-500 transition-all duration-2000 ${
+                  isAnimating && clickedCard !== "coding"
+                    ? getCardMergePosition("coding", clickedCard)
+                    : ""
+                } ${
+                  isAnimating && clickedCard === "coding"
+                    ? "scale-110 z-50"
+                    : ""
+                }`}
+              >
+                <div
+                  className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000"
+                  onClick={() => handleCardClick("coding")}
+                >
                   <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
                     <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
                       <img
@@ -176,8 +266,21 @@ export default function Index() {
               </div>
 
               {/* College Card - Center */}
-              <div className="transform rotate-[-3deg] animate-float animation-delay-200">
-                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+              <div
+                className={`transform rotate-[-3deg] animate-float animation-delay-200 transition-all duration-2000 ${
+                  isAnimating && clickedCard !== "college"
+                    ? getCardMergePosition("college", clickedCard)
+                    : ""
+                } ${
+                  isAnimating && clickedCard === "college"
+                    ? "scale-110 z-50"
+                    : ""
+                }`}
+              >
+                <div
+                  className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000"
+                  onClick={() => handleCardClick("college")}
+                >
                   <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
                     <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
                       <img
@@ -196,8 +299,21 @@ export default function Index() {
               </div>
 
               {/* Editing Card */}
-              <div className="transform rotate-[7deg] animate-float animation-delay-800">
-                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+              <div
+                className={`transform rotate-[7deg] animate-float animation-delay-800 transition-all duration-2000 ${
+                  isAnimating && clickedCard !== "editing"
+                    ? getCardMergePosition("editing", clickedCard)
+                    : ""
+                } ${
+                  isAnimating && clickedCard === "editing"
+                    ? "scale-110 z-50"
+                    : ""
+                }`}
+              >
+                <div
+                  className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000"
+                  onClick={() => handleCardClick("editing")}
+                >
                   <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
                     <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
                       <img
@@ -216,8 +332,21 @@ export default function Index() {
               </div>
 
               {/* Film and TV Card */}
-              <div className="transform rotate-[-5deg] animate-float animation-delay-1000">
-                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+              <div
+                className={`transform rotate-[-5deg] animate-float animation-delay-1000 transition-all duration-2000 ${
+                  isAnimating && clickedCard !== "filmtv"
+                    ? getCardMergePosition("filmtv", clickedCard)
+                    : ""
+                } ${
+                  isAnimating && clickedCard === "filmtv"
+                    ? "scale-110 z-50"
+                    : ""
+                }`}
+              >
+                <div
+                  className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000"
+                  onClick={() => handleCardClick("filmtv")}
+                >
                   <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
                     <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
                       <img

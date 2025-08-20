@@ -145,6 +145,10 @@
     animation-delay: 2s;
   }
 
+  .duration-2000 {
+    transition-duration: 2000ms;
+  }
+
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
