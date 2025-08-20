@@ -38,7 +38,7 @@ export default function Questionnaire() {
           </div>
 
           {/* Option Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
+          <div className="flex flex-row gap-4 justify-center items-center px-4">
             <button
               onClick={() => setSelectedOption('guide')}
               className={`px-6 py-3 rounded-xl border-2 text-lg sm:text-xl lg:text-2xl font-medium transition-all duration-300 hover:scale-105 ${
