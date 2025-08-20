@@ -153,8 +153,19 @@ export default function Index() {
           <div className="mt-16 relative z-10">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-items-center max-w-5xl mx-auto">
               {/* Photography Card */}
-              <div className="transform rotate-[-8deg] animate-float">
-                <div className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000">
+              <div className={`transform rotate-[-8deg] animate-float transition-all duration-2000 ${
+                isAnimating && clickedCard !== 'photography'
+                  ? 'translate-x-0 translate-y-0 scale-0 opacity-0'
+                  : ''
+              } ${
+                isAnimating && clickedCard === 'photography'
+                  ? 'scale-110 z-50'
+                  : ''
+              }`}>
+                <div
+                  className="flip-card w-32 h-32 lg:w-40 lg:h-40 group cursor-pointer perspective-1000"
+                  onClick={() => handleCardClick('photography')}
+                >
                   <div className="flip-card-inner w-full h-full relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
                     <div className="flip-card-front absolute w-full h-full backface-hidden rounded-2xl shadow-2xl">
                       <img
