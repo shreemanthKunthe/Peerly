@@ -3,8 +3,11 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Index() {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNavbarScrolled, setIsNavbarScrolled] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [clickedCard, setClickedCard] = useState<string>('');
 
   // Handle navbar scroll effect
   useEffect(() => {
