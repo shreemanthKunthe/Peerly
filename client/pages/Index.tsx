@@ -155,7 +155,7 @@ export default function Index() {
               {/* Photography Card */}
               <div className={`transform rotate-[-8deg] animate-float transition-all duration-2000 ${
                 isAnimating && clickedCard !== 'photography'
-                  ? 'translate-x-0 translate-y-0 scale-0 opacity-0'
+                  ? getCardMergePosition('photography', clickedCard)
                   : ''
               } ${
                 isAnimating && clickedCard === 'photography'
