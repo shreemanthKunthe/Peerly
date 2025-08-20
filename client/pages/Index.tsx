@@ -326,7 +326,7 @@ export default function Index() {
               {/* Film and TV Card */}
               <div className={`transform rotate-[-5deg] animate-float animation-delay-1000 transition-all duration-2000 ${
                 isAnimating && clickedCard !== 'filmtv'
-                  ? 'translate-x-0 translate-y-0 scale-0 opacity-0'
+                  ? getCardMergePosition('filmtv', clickedCard)
                   : ''
               } ${
                 isAnimating && clickedCard === 'filmtv'
