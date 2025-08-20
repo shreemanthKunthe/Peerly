@@ -41,7 +41,7 @@ export default function Questionnaire() {
           <div className="flex flex-row gap-4 justify-center items-center px-4">
             <button
               onClick={() => setSelectedOption('guide')}
-              className={`px-6 py-3 rounded-xl border-2 text-lg sm:text-xl lg:text-2xl font-medium transition-all duration-300 hover:scale-105 ${
+              className={`flex-1 max-w-[150px] px-4 py-3 rounded-xl border-2 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium transition-all duration-300 hover:scale-105 ${
                 selectedOption === 'guide'
                   ? 'border-purple-500 bg-purple-500/20 text-white'
                   : 'border-purple-500 text-white hover:bg-purple-500/10'
@@ -51,7 +51,7 @@ export default function Questionnaire() {
             </button>
             <button
               onClick={() => setSelectedOption('seeker')}
-              className={`px-6 py-3 rounded-xl border-2 text-lg sm:text-xl lg:text-2xl font-medium transition-all duration-300 hover:scale-105 ${
+              className={`flex-1 max-w-[150px] px-4 py-3 rounded-xl border-2 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium transition-all duration-300 hover:scale-105 ${
                 selectedOption === 'seeker'
                   ? 'border-purple-500 bg-purple-500/20 text-white'
                   : 'border-purple-500 text-white hover:bg-purple-500/10'
