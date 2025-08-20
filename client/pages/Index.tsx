@@ -41,6 +41,53 @@ export default function Index() {
     }, 2000); // 2 seconds for animation
   };
 
+  // Calculate merge position for cards moving towards clicked card
+  const getCardMergePosition = (currentCard: string, targetCard: string) => {
+    const cardPositions: { [key: string]: string } = {
+      'photography': 'translate-x-0 translate-y-0', // First position
+      'coding': 'translate-x-0 translate-y-0', // Second position
+      'college': 'translate-x-0 translate-y-0', // Third position (center)
+      'editing': 'translate-x-0 translate-y-0', // Fourth position
+      'filmtv': 'translate-x-0 translate-y-0' // Fifth position
+    };
+
+    // Define movement towards each target card
+    const movements: { [key: string]: { [key: string]: string } } = {
+      'photography': {
+        'coding': '-translate-x-32 lg:-translate-x-40',
+        'college': '-translate-x-64 lg:-translate-x-80',
+        'editing': '-translate-x-96 lg:-translate-x-120',
+        'filmtv': '-translate-x-128 lg:-translate-x-160'
+      },
+      'coding': {
+        'photography': 'translate-x-32 lg:translate-x-40',
+        'college': '-translate-x-32 lg:-translate-x-40',
+        'editing': '-translate-x-64 lg:-translate-x-80',
+        'filmtv': '-translate-x-96 lg:-translate-x-120'
+      },
+      'college': {
+        'photography': 'translate-x-64 lg:translate-x-80',
+        'coding': 'translate-x-32 lg:translate-x-40',
+        'editing': '-translate-x-32 lg:-translate-x-40',
+        'filmtv': '-translate-x-64 lg:-translate-x-80'
+      },
+      'editing': {
+        'photography': 'translate-x-96 lg:translate-x-120',
+        'coding': 'translate-x-64 lg:translate-x-80',
+        'college': 'translate-x-32 lg:translate-x-40',
+        'filmtv': '-translate-x-32 lg:-translate-x-40'
+      },
+      'filmtv': {
+        'photography': 'translate-x-128 lg:translate-x-160',
+        'coding': 'translate-x-96 lg:translate-x-120',
+        'college': 'translate-x-64 lg:translate-x-80',
+        'editing': 'translate-x-32 lg:translate-x-40'
+      }
+    };
+
+    return `${movements[currentCard]?.[targetCard] || ''} scale-75 opacity-80`;
+  };
+
   return (
     <div className="min-h-screen bg-black text-white font-instrument overflow-x-hidden">
       {/* Background Gradient */}
