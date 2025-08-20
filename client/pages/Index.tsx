@@ -264,7 +264,7 @@ export default function Index() {
               {/* College Card - Center */}
               <div className={`transform rotate-[-3deg] animate-float animation-delay-200 transition-all duration-2000 ${
                 isAnimating && clickedCard !== 'college'
-                  ? 'translate-x-0 translate-y-0 scale-0 opacity-0'
+                  ? getCardMergePosition('college', clickedCard)
                   : ''
               } ${
                 isAnimating && clickedCard === 'college'
