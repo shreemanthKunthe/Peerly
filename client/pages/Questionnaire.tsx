@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Questionnaire() {
-  const [selectedOption, setSelectedOption] = useState<string>('');
+  const [selectedOption, setSelectedOption] = useState<string>("");
 
   const handleContinue = () => {
     if (selectedOption) {
-      console.log('Selected role:', selectedOption);
+      console.log("Selected role:", selectedOption);
       // Here you would typically save the user's choice and redirect to dashboard
       // For now, we'll just log it
     }
   };
 
   const handleSkip = () => {
-    console.log('User skipped role selection');
+    console.log("User skipped role selection");
     // Redirect to dashboard without role selection
   };
 
@@ -40,21 +40,21 @@ export default function Questionnaire() {
           {/* Option Buttons */}
           <div className="flex flex-row gap-4 justify-center items-center px-4">
             <button
-              onClick={() => setSelectedOption('guide')}
+              onClick={() => setSelectedOption("guide")}
               className={`flex-1 max-w-[150px] px-4 py-3 rounded-xl border-2 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium transition-all duration-300 hover:scale-105 ${
-                selectedOption === 'guide'
-                  ? 'border-purple-500 bg-purple-500/20 text-white'
-                  : 'border-purple-500 text-white hover:bg-purple-500/10'
+                selectedOption === "guide"
+                  ? "border-purple-500 bg-purple-500/20 text-white"
+                  : "border-purple-500 text-white hover:bg-purple-500/10"
               }`}
             >
               Guide
             </button>
             <button
-              onClick={() => setSelectedOption('seeker')}
+              onClick={() => setSelectedOption("seeker")}
               className={`flex-1 max-w-[150px] px-4 py-3 rounded-xl border-2 text-base sm:text-lg lg:text-xl xl:text-2xl font-medium transition-all duration-300 hover:scale-105 ${
-                selectedOption === 'seeker'
-                  ? 'border-purple-500 bg-purple-500/20 text-white'
-                  : 'border-purple-500 text-white hover:bg-purple-500/10'
+                selectedOption === "seeker"
+                  ? "border-purple-500 bg-purple-500/20 text-white"
+                  : "border-purple-500 text-white hover:bg-purple-500/10"
               }`}
             >
               Seeker
@@ -68,8 +68,8 @@ export default function Questionnaire() {
               disabled={!selectedOption}
               className={`w-full px-8 py-3 rounded-xl text-lg sm:text-xl lg:text-2xl font-medium transition-all duration-300 ${
                 selectedOption
-                  ? 'bg-purple-600 hover:bg-purple-700 text-white hover:scale-105 cursor-pointer'
-                  : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                  ? "bg-purple-600 hover:bg-purple-700 text-white hover:scale-105 cursor-pointer"
+                  : "bg-gray-600 text-gray-400 cursor-not-allowed"
               }`}
             >
               Continue
@@ -88,8 +88,8 @@ export default function Questionnaire() {
 
           {/* Back to Home Link */}
           <div className="pt-8">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="text-gray-400 hover:text-white transition-colors text-sm"
             >
               ← Back to Home

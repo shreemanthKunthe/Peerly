@@ -17,14 +17,14 @@ export default function SignIn() {
     // In a real app, you'd validate credentials here
     if (email && password) {
       // Redirect to questionnaire page
-      navigate('/questionnaire');
+      navigate("/questionnaire");
     }
   };
 
   const handleGoogleSignIn = () => {
     console.log("Google sign in");
     // Simulate successful Google sign-in
-    navigate('/questionnaire');
+    navigate("/questionnaire");
   };
 
   return (
