@@ -29,7 +29,7 @@ export default function Questionnaire() {
         <div className="text-center space-y-12">
           {/* Header */}
           <div className="space-y-3">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight lg:whitespace-nowrap">
               Are you a Guide or a Seeker?
             </h1>
             <p className="text-lg sm:text-xl lg:text-2xl text-white/90">
