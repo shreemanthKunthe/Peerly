@@ -26,7 +26,7 @@ export default function Questionnaire() {
       </div>
 
       <div className="relative z-10 w-full max-w-2xl mx-auto px-4">
-        <div className="text-center space-y-12">
+        <div className="text-center space-y-8 sm:space-y-12">
           {/* Header */}
           <div className="space-y-3">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight lg:whitespace-nowrap">
@@ -62,7 +62,7 @@ export default function Questionnaire() {
           </div>
 
           {/* Continue Button */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <button
               onClick={handleContinue}
               disabled={!selectedOption}
