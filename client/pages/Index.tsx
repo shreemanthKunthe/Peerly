@@ -295,7 +295,7 @@ export default function Index() {
               {/* Editing Card */}
               <div className={`transform rotate-[7deg] animate-float animation-delay-800 transition-all duration-2000 ${
                 isAnimating && clickedCard !== 'editing'
-                  ? 'translate-x-0 translate-y-0 scale-0 opacity-0'
+                  ? getCardMergePosition('editing', clickedCard)
                   : ''
               } ${
                 isAnimating && clickedCard === 'editing'
