@@ -66,7 +66,7 @@ export default function Questionnaire() {
             <button
               onClick={handleContinue}
               disabled={!selectedOption}
-              className={`w-full sm:w-auto px-8 py-3 rounded-xl text-lg sm:text-xl lg:text-2xl font-medium transition-all duration-300 ${
+              className={`w-full px-8 py-3 rounded-xl text-lg sm:text-xl lg:text-2xl font-medium transition-all duration-300 ${
                 selectedOption
                   ? 'bg-purple-600 hover:bg-purple-700 text-white hover:scale-105 cursor-pointer'
                   : 'bg-gray-600 text-gray-400 cursor-not-allowed'
