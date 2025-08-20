@@ -233,7 +233,7 @@ export default function Index() {
               {/* Coding Card */}
               <div className={`transform rotate-[5deg] animate-float animation-delay-500 transition-all duration-2000 ${
                 isAnimating && clickedCard !== 'coding'
-                  ? 'translate-x-0 translate-y-0 scale-0 opacity-0'
+                  ? getCardMergePosition('coding', clickedCard)
                   : ''
               } ${
                 isAnimating && clickedCard === 'coding'
