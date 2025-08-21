@@ -21,9 +21,11 @@ export function getFirebaseAdmin() {
         const msg = e?.message || String(e);
         throw new Error(`Failed to load FIREBASE_SERVICE_ACCOUNT_BASE64: ${msg}`);
       }
+      const projectId = process.env.FIREBASE_PROJECT_ID || creds.project_id;
+      console.log('[firebase-admin] init via BASE64, projectId=', projectId);
       admin.initializeApp({
         credential: admin.credential.cert(creds),
-        projectId: process.env.FIREBASE_PROJECT_ID || creds.project_id,
+        projectId,
       });
     } else if (saJson) {
       let creds: any;
@@ -77,12 +79,15 @@ export function getFirebaseAdmin() {
         const msg = e?.message || String(e);
         throw new Error(`Failed to load FIREBASE_SERVICE_ACCOUNT_JSON: ${msg}`);
       }
+      const projectId = process.env.FIREBASE_PROJECT_ID || creds.project_id;
+      console.log('[firebase-admin] init via JSON, projectId=', projectId);
       admin.initializeApp({
         credential: admin.credential.cert(creds),
-        projectId: process.env.FIREBASE_PROJECT_ID || creds.project_id,
+        projectId,
       });
     } else {
       // Fallback to default application credentials (GOOGLE_APPLICATION_CREDENTIALS)
+      console.log('[firebase-admin] init via ADC, projectId=', process.env.FIREBASE_PROJECT_ID);
       admin.initializeApp({
         credential: admin.credential.applicationDefault(),
         projectId: process.env.FIREBASE_PROJECT_ID,
