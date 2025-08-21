@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../lib/firebase";
+import { createSession } from "../lib/api";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -8,23 +11,38 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Sign in attempt", { email, password, keepLoggedIn });
-
-    // Simulate successful sign-in
-    // In a real app, you'd validate credentials here
-    if (email && password) {
-      // Redirect to questionnaire page
+    setError(null);
+    setLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      const idToken = await auth.currentUser!.getIdToken(true);
+      await createSession(idToken);
       navigate("/questionnaire");
+    } catch (err: any) {
+      setError(err?.message || "Failed to sign in");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleGoogleSignIn = () => {
-    console.log("Google sign in");
-    // Simulate successful Google sign-in
-    navigate("/questionnaire");
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      await signInWithPopup(auth, googleProvider);
+      const idToken = await auth.currentUser!.getIdToken(true);
+      await createSession(idToken);
+      navigate("/questionnaire");
+    } catch (err: any) {
+      setError(err?.message || "Google sign-in failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,6 +80,11 @@ export default function SignIn() {
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {error && (
+                    <div className="text-red-400 text-sm" role="alert">
+                      {error}
+                    </div>
+                  )}
                   {/* Email Field */}
                   <div className="relative">
                     <input
@@ -134,9 +157,10 @@ export default function SignIn() {
                   {/* Sign In Button */}
                   <button
                     type="submit"
-                    className="w-full bg-white text-black py-3 rounded-lg font-semibold text-sm hover:bg-gray-100 transition-colors"
+                    disabled={loading}
+                    className="w-full bg-white text-black py-3 rounded-lg font-semibold text-sm hover:bg-gray-100 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
                   >
-                    Sign in
+                    {loading ? "Signing in..." : "Sign in"}
                   </button>
 
                   {/* Divider */}
@@ -148,7 +172,8 @@ export default function SignIn() {
                   <button
                     type="button"
                     onClick={handleGoogleSignIn}
-                    className="w-full bg-white text-gray-800 py-3 rounded-lg font-semibold text-sm hover:bg-gray-100 transition-colors flex items-center justify-center space-x-2 border border-gray-300"
+                    disabled={loading}
+                    className="w-full bg-white text-gray-800 py-3 rounded-lg font-semibold text-sm hover:bg-gray-100 disabled:opacity-60 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2 border border-gray-300"
                   >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
                       <path
