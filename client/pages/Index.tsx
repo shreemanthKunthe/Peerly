@@ -163,7 +163,7 @@ export default function Index() {
                   About
                 </button>
                 <Link
-                  to="/signin"
+                  to="/signup"
                   className="px-6 py-2 border border-white rounded w-fit inline-block text-center"
                 >
                   Sign Up
@@ -476,7 +476,7 @@ export default function Index() {
                 started as a simple idea has grown into a platform built on
                 collaboration, curiosity, and community. At Peerly, students and
                 professionals come together to share skills, exchange knowledge,
-                and learn from one another ��� making growth a collective journey
+                and learn from one another — making growth a collective journey
                 rather than a solo one.
               </p>
 
