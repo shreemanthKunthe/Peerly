@@ -54,3 +54,10 @@ export async function currentUser(req: AuthenticatedRequest, res: Response) {
   const role = req.user.role ?? (await getUserRole(req.user.uid));
   return res.json({ uid: req.user.uid, role: role ?? null });
 }
+
+// POST /api/auth/logout
+export async function logout(_req: Request, res: Response) {
+  // Clear the session cookie
+  res.clearCookie("__session", { path: "/" });
+  return res.status(200).json({ ok: true });
+}

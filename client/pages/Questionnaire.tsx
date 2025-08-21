@@ -1,20 +1,31 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { setRole } from "@/lib/api";
 
 export default function Questionnaire() {
+  const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState<string>("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleContinue = () => {
-    if (selectedOption) {
-      console.log("Selected role:", selectedOption);
-      // Here you would typically save the user's choice and redirect to dashboard
-      // For now, we'll just log it
+  const handleContinue = async () => {
+    if (!selectedOption) return;
+    setError(null);
+    setSubmitting(true);
+    try {
+      // Map UI option to backend role values
+      const role = selectedOption === "guide" ? "guider" : ("seeker" as const);
+      await setRole(role);
+      navigate(role === "guider" ? "/templates/guider" : "/templates/seeker");
+    } catch (e: any) {
+      setError(e?.message || "Failed to save role");
+    } finally {
+      setSubmitting(false);
     }
   };
 
   const handleSkip = () => {
-    console.log("User skipped role selection");
-    // Redirect to dashboard without role selection
+    navigate("/");
   };
 
   return (
@@ -65,15 +76,21 @@ export default function Questionnaire() {
           <div className="space-y-4 sm:space-y-6">
             <button
               onClick={handleContinue}
-              disabled={!selectedOption}
+              disabled={!selectedOption || submitting}
               className={`w-full px-8 py-3 rounded-xl text-lg sm:text-xl lg:text-2xl font-medium transition-all duration-300 ${
                 selectedOption
                   ? "bg-purple-600 hover:bg-purple-700 text-white hover:scale-105 cursor-pointer"
                   : "bg-gray-600 text-gray-400 cursor-not-allowed"
               }`}
             >
-              Continue
+              {submitting ? "Saving..." : "Continue"}
             </button>
+
+            {error && (
+              <div className="text-red-400 text-sm" role="alert">
+                {error}
+              </div>
+            )}
 
             {/* Skip Option */}
             <div>

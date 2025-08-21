@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
+import { auth, googleProvider } from "@/lib/firebase";
+import { createSession } from "@/lib/api";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -9,23 +12,44 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Sign up attempt", { name, email, password, keepLoggedIn });
-
-    // Simulate successful sign-up
-    // In a real app, you'd create the account here
-    if (name && email && password) {
-      // Redirect to questionnaire page after successful registration
+    setError(null);
+    setLoading(true);
+    try {
+      // Create Firebase user
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      // Set display name if provided
+      if (name) {
+        await updateProfile(cred.user, { displayName: name });
+      }
+      // Mint backend session cookie
+      const idToken = await cred.user.getIdToken(true);
+      await createSession(idToken);
       navigate("/questionnaire");
+    } catch (err: any) {
+      setError(err?.message || "Failed to sign up");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleGoogleSignUp = () => {
-    console.log("Google sign up");
-    // Simulate successful Google sign-up
-    navigate("/questionnaire");
+  const handleGoogleSignUp = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const idToken = await result.user.getIdToken(true);
+      await createSession(idToken);
+      navigate("/questionnaire");
+    } catch (err: any) {
+      setError(err?.message || "Google sign up failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -63,6 +87,11 @@ export default function SignUp() {
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {error && (
+                    <div className="text-red-400 text-sm" role="alert">
+                      {error}
+                    </div>
+                  )}
                   {/* Name Field */}
                   <div className="relative">
                     <input
@@ -158,9 +187,10 @@ export default function SignUp() {
                   {/* Sign Up Button */}
                   <button
                     type="submit"
-                    className="w-full bg-white text-black py-3 rounded-lg font-semibold text-sm hover:bg-gray-100 transition-colors"
+                    disabled={loading}
+                    className="w-full bg-white text-black py-3 rounded-lg font-semibold text-sm hover:bg-gray-100 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
                   >
-                    Sign up
+                    {loading ? "Creating account..." : "Sign up"}
                   </button>
 
                   {/* Divider */}
@@ -172,7 +202,8 @@ export default function SignUp() {
                   <button
                     type="button"
                     onClick={handleGoogleSignUp}
-                    className="w-full bg-white text-gray-800 py-3 rounded-lg font-semibold text-sm hover:bg-gray-100 transition-colors flex items-center justify-center space-x-2 border border-gray-300"
+                    disabled={loading}
+                    className="w-full bg-white text-gray-800 py-3 rounded-lg font-semibold text-sm hover:bg-gray-100 disabled:opacity-60 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2 border border-gray-300"
                   >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
                       <path
