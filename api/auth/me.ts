@@ -1,4 +1,4 @@
-import { getFirebaseAdmin, getUserRole, type UserRole } from '../../server/firebase';
+import { getFirebaseAdmin, getUserRole, type UserRole } from '../_lib/firebase';
 
 function getToken(req: any): string | undefined {
   const auth = req.headers['authorization'];

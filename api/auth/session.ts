@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { getFirebaseAdmin, type UserRole } from '../../server/firebase';
+import { getFirebaseAdmin, type UserRole } from '../_lib/firebase';
 
 function serializeCookie(name: string, value: string, options: {
   httpOnly?: boolean;

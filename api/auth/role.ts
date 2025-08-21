@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { getFirebaseAdmin, setUserRole } from '../../server/firebase';
+import { getFirebaseAdmin, setUserRole } from '../_lib/firebase';
 
 function getToken(req: any): string | undefined {
   const auth = req.headers['authorization'];
