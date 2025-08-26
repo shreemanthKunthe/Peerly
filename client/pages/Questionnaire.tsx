@@ -2,13 +2,20 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Questionnaire() {
+  const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState<string>("");
 
   const handleContinue = () => {
     if (selectedOption) {
       console.log("Selected role:", selectedOption);
-      // Here you would typically save the user's choice and redirect to dashboard
-      // For now, we'll just log it
+
+      // Redirect based on selected role
+      if (selectedOption === 'guide') {
+        navigate('/guide-profile');
+      } else if (selectedOption === 'seeker') {
+        // For now, redirect to home. Later we can create a seeker profile page
+        navigate('/');
+      }
     }
   };
 
