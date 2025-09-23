@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import { createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect, updateProfile, getRedirectResult } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import { createSession } from "@/lib/api";
 
@@ -36,6 +36,23 @@ export default function SignUp() {
       setLoading(false);
     }
   };
+
+  // Complete redirect-based sign-up flow if returning from provider
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result?.user) {
+          const idToken = await result.user.getIdToken(true);
+          await createSession(idToken);
+          navigate("/questionnaire");
+        }
+      } catch {
+        // ignore
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleGoogleSignUp = async () => {
     setError(null);
