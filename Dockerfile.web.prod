@@ -1,0 +1,37 @@
+# Frontend (Web) Production Dockerfile
+# Multi-stage: build -> nginx
+
+FROM node:20-alpine AS build
+RUN corepack enable && corepack prepare pnpm@10.14.0 --activate
+WORKDIR /app
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+# Copy sources needed to build SPA
+COPY client ./client
+COPY shared ./shared
+COPY index.html ./index.html
+COPY vite.config.ts ./vite.config.ts
+COPY tsconfig.json ./tsconfig.json
+COPY postcss.config.js ./postcss.config.js
+COPY tailwind.config.ts ./tailwind.config.ts
+
+# Optionally allow overriding API base at build time
+# If not provided, app will use relative "/api"
+ARG VITE_API_BASE
+ENV VITE_API_BASE=${VITE_API_BASE}
+
+RUN pnpm run build:client
+
+# --- Runtime image (nginx) ---
+FROM nginx:1.27-alpine AS runtime
+
+# Copy NGINX config to proxy /api to the api service
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy built static site
+COPY --from=build /app/dist/spa /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

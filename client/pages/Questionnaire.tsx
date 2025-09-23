@@ -16,7 +16,7 @@ export default function Questionnaire() {
       // Map UI option to backend role values
       const role = selectedOption === "guide" ? "guider" : ("seeker" as const);
       await setRole(role);
-      navigate(role === "guider" ? "/templates/guider" : "/templates/seeker");
+      navigate(role === "guider" ? "/guide-profile" : "/templates/seeker");
     } catch (e: any) {
       setError(e?.message || "Failed to save role");
     } finally {

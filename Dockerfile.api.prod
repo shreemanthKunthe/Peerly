@@ -1,0 +1,38 @@
+# Backend (API) Production Dockerfile
+# Multi-stage: build -> runtime
+
+FROM node:20-alpine AS build
+RUN corepack enable && corepack prepare pnpm@10.14.0 --activate
+WORKDIR /app
+
+# Install deps
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+# Copy sources needed to build server
+COPY server ./server
+COPY shared ./shared
+COPY vite.config.server.ts ./vite.config.server.ts
+COPY tsconfig.json ./tsconfig.json
+
+# Build only the server bundle
+RUN pnpm run build:server
+
+# --- Runtime image ---
+FROM node:20-alpine AS runtime
+ENV NODE_ENV=production
+WORKDIR /app
+
+# Copy only production deps
+RUN corepack enable && corepack prepare pnpm@10.14.0 --activate
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --prod --frozen-lockfile
+
+# Copy built server output
+COPY --from=build /app/dist/server ./dist/server
+
+# Default envs
+ENV PORT=8082
+EXPOSE 8082
+
+CMD ["node", "dist/server/node-build.mjs"]

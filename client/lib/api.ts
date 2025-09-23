@@ -35,3 +35,35 @@ export async function setRole(role: 'seeker' | 'guider') {
 export async function logout() {
   return api('/api/auth/logout', { method: 'POST' });
 }
+
+// Guider profile module
+export type GuiderProfile = {
+  id: string;
+  name: string;
+  usn: string;
+  bio: string;
+  domain: string;
+  portfolioLink?: string;
+  linkedinLink?: string;
+  profileImageUrl?: string;
+  createdAt?: any;
+  updatedAt?: any;
+};
+
+export async function getGuiderProfile() {
+  return api<GuiderProfile>('/api/guider/profile');
+}
+
+export async function upsertGuiderProfile(payload: Partial<GuiderProfile>) {
+  return api<GuiderProfile>('/api/guider/profile', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function uploadGuiderProfileImage(dataUrl: string) {
+  return api<{ url: string }>('/api/guider/profile/image', {
+    method: 'POST',
+    body: JSON.stringify({ dataUrl }),
+  });
+}

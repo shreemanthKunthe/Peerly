@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: peerly-api
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    env_file:
+      - .env
+    environment:
+      - PORT=8082
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./server:/app/server
+      - ./shared:/app/shared
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml:ro
+      - ./package.json:/app/package.json:ro
+      - pnpm-store:/root/.local/share/pnpm/store/v3
+    command: ["pnpm", "dev:server"]
+
+  web:
+    container_name: peerly-web
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    env_file:
+      - .env
+    environment:
+      - VITE_API_PROXY=http://api:8082
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+    volumes:
+      - ./client:/app/client
+      - ./shared:/app/shared
+      - ./index.html:/app/index.html:ro
+      - ./vite.config.ts:/app/vite.config.ts:ro
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml:ro
+      - ./package.json:/app/package.json:ro
+      - pnpm-store:/root/.local/share/pnpm/store/v3
+    command: ["pnpm", "dev", "--host", "0.0.0.0", "--port", "8080"]
+
+volumes:
+  pnpm-store:

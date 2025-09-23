@@ -6,6 +6,8 @@ import { handleDemo } from "./routes/demo";
 import { createSession, currentUser, setRole, logout } from "./routes/auth";
 import { guiderOnly, seekerOnly } from "./routes/protected";
 import { requireRole, verifyFirebaseToken } from "./middleware/auth";
+import { registerGuiderRoutes } from "./routes/guider";
+import { getFirebaseAdmin } from "./firebase";
 
 export function createServer() {
   const app = express();
@@ -20,7 +22,7 @@ export function createServer() {
     }),
   );
   app.use(cookieParser());
-  app.use(express.json());
+  app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: true }));
 
   // Example API routes
@@ -30,6 +32,25 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  // Diagnostics (non-production): report Firebase initialization and bucket existence
+  if (process.env.NODE_ENV !== "production") {
+    app.get("/api/admin/firebase-info", async (_req, res) => {
+      try {
+        const admin = getFirebaseAdmin();
+        const projectId = (admin.app().options as any).projectId || process.env.FIREBASE_PROJECT_ID;
+        const storageBucket = (admin.app().options as any).storageBucket || process.env.FIREBASE_STORAGE_BUCKET;
+        let bucketExists: boolean | undefined = undefined;
+        if (storageBucket) {
+          const [exists] = await admin.storage().bucket(storageBucket).exists();
+          bucketExists = !!exists;
+        }
+        res.json({ projectId, storageBucket, bucketExists });
+      } catch (e: any) {
+        res.status(500).json({ error: e?.message || String(e) });
+      }
+    });
+  }
 
   // Auth routes
   app.post("/api/auth/session", createSession);
@@ -50,6 +71,9 @@ export function createServer() {
     requireRole("guider"),
     guiderOnly,
   );
+
+  // Guider profile module
+  registerGuiderRoutes(app);
 
   return app;
 }

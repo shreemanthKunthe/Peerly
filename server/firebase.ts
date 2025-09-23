@@ -23,10 +23,17 @@ export function getFirebaseAdmin() {
         throw new Error(`Failed to load FIREBASE_SERVICE_ACCOUNT_BASE64: ${msg}`);
       }
       const projectId = process.env.FIREBASE_PROJECT_ID || creds.project_id;
-      console.log('[firebase-admin] init via BASE64, projectId=', projectId);
+      const storageBucket = process.env.FIREBASE_STORAGE_BUCKET || (projectId ? `${projectId}.appspot.com` : undefined);
+      if (!storageBucket) {
+        throw new Error(
+          "Missing storage bucket. Set FIREBASE_STORAGE_BUCKET or FIREBASE_PROJECT_ID in environment."
+        );
+      }
+      console.log('[firebase-admin] init via BASE64', { projectId, storageBucket });
       admin.initializeApp({
         credential: admin.credential.cert(creds),
         projectId,
+        storageBucket,
       });
   } else if (saJson) {
       let creds: any;
@@ -81,17 +88,32 @@ export function getFirebaseAdmin() {
         throw new Error(`Failed to load FIREBASE_SERVICE_ACCOUNT_JSON: ${msg}`);
       }
       const projectId = process.env.FIREBASE_PROJECT_ID || creds.project_id;
-      console.log('[firebase-admin] init via JSON, projectId=', projectId);
+      const storageBucket = process.env.FIREBASE_STORAGE_BUCKET || (projectId ? `${projectId}.appspot.com` : undefined);
+      if (!storageBucket) {
+        throw new Error(
+          "Missing storage bucket. Set FIREBASE_STORAGE_BUCKET or FIREBASE_PROJECT_ID in environment."
+        );
+      }
+      console.log('[firebase-admin] init via JSON', { projectId, storageBucket });
       admin.initializeApp({
         credential: admin.credential.cert(creds),
         projectId,
+        storageBucket,
       });
   } else {
       // Fallback to default application credentials (GOOGLE_APPLICATION_CREDENTIALS)
-      console.log('[firebase-admin] init via ADC, projectId=', process.env.FIREBASE_PROJECT_ID);
+      const projectId = process.env.FIREBASE_PROJECT_ID;
+      const storageBucket = process.env.FIREBASE_STORAGE_BUCKET || (projectId ? `${projectId}.appspot.com` : undefined);
+      console.log('[firebase-admin] init via ADC', { projectId, storageBucket });
+      if (!storageBucket) {
+        throw new Error(
+          "Missing storage bucket. Set FIREBASE_STORAGE_BUCKET or FIREBASE_PROJECT_ID in environment."
+        );
+      }
       admin.initializeApp({
         credential: admin.credential.applicationDefault(),
-        projectId: process.env.FIREBASE_PROJECT_ID,
+        projectId,
+        storageBucket,
       });
   }
   return admin;

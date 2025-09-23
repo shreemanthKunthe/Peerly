@@ -1,0 +1,28 @@
+# Frontend (Web) Dockerfile
+# Dev-optimized image using PNPM and Vite
+FROM node:20-alpine
+
+# Enable corepack to manage pnpm
+RUN corepack enable && corepack prepare pnpm@10.14.0 --activate
+
+WORKDIR /app
+
+# Install deps with caching
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+# Copy necessary sources for dev
+COPY client ./client
+COPY shared ./shared
+COPY index.html ./index.html
+COPY vite.config.ts ./vite.config.ts
+
+# Default env
+ENV NODE_ENV=development
+# When running in Docker Compose, this will be overridden to http://api:8082
+ENV VITE_API_PROXY=http://localhost:8082
+
+EXPOSE 8080
+
+# Run Vite dev server
+CMD ["pnpm", "dev", "--host", "0.0.0.0", "--port", "8080"]

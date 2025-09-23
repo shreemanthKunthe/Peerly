@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { X, Upload } from 'lucide-react';
+import { upsertGuiderProfile, uploadGuiderProfileImage } from '@/lib/api';
 
 export default function GuideProfile() {
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ export default function GuideProfile() {
     linkedinLink: '',
     profileImage: null as File | null
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
@@ -31,12 +34,38 @@ export default function GuideProfile() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Guide profile data:', formData);
-    // Here you would typically save the profile data
-    // For now, we'll just redirect to a success page or dashboard
-    navigate('/');
+    setError(null);
+    setSubmitting(true);
+    try {
+      // Upload image if provided
+      let profileImageUrl = '';
+      if (formData.profileImage) {
+        const dataUrl = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(formData.profileImage!);
+        });
+        const resp = await uploadGuiderProfileImage(dataUrl);
+        profileImageUrl = resp.url;
+      }
+      await upsertGuiderProfile({
+        name: formData.name,
+        usn: formData.usn,
+        bio: formData.bio,
+        domain: formData.domain,
+        portfolioLink: formData.portfolioLink,
+        linkedinLink: formData.linkedinLink,
+        profileImageUrl
+      });
+      navigate('/');
+    } catch (e: any) {
+      setError(e?.message || 'Failed to save profile');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleCancel = () => {
@@ -238,12 +267,19 @@ export default function GuideProfile() {
             </button>
             <button
               type="submit"
-              className="flex-1 px-8 py-4 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+              disabled={submitting}
+              className="flex-1 px-8 py-4 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-60"
             >
-              Create Profile
+              {submitting ? 'Saving...' : 'Create Profile'}
             </button>
           </div>
         </form>
+
+        {error && (
+          <div className="text-red-400 text-sm pt-4" role="alert">
+            {error}
+          </div>
+        )}
 
         {/* Back to home link */}
         <div className="text-center pt-8">
