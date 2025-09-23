@@ -73,7 +73,7 @@ export default function GuideProfile() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-instrument flex items-center justify-center p-4">
+    <div className="min-h-screen bg-black text-white font-instrument flex items-center justify-center p-0 sm:p-4">
       {/* Background gradients */}
       <div className="fixed inset-0 z-0">
         <div className="absolute top-20 left-20 w-[600px] h-[1000px] rotate-[-87deg] rounded-full bg-gradient-to-r from-purple-500/40 to-indigo-600/40 blur-[150px]" />
@@ -81,7 +81,7 @@ export default function GuideProfile() {
       </div>
 
       {/* Modal Content */}
-      <div className="relative z-10 w-full max-w-4xl bg-black/90 backdrop-blur-md rounded-2xl p-6 sm:p-8 lg:p-10 shadow-2xl">
+      <div className="relative z-10 w-full max-w-4xl bg-black/90 backdrop-blur-md rounded-none sm:rounded-2xl p-6 sm:p-8 lg:p-10 shadow-2xl min-h-screen sm:min-h-0">
         {/* Header */}
         <div className="flex items-center justify-between mb-10">
           <div className="space-y-2">
@@ -243,13 +243,14 @@ export default function GuideProfile() {
 
                 {/* LinkedIn Link */}
                 <div className="space-y-3">
-                  <label className="block text-white text-sm font-medium">LinkedIn Profile</label>
+                  <label className="block text-white text-sm font-medium">LinkedIn Profile *</label>
                   <input
                     type="url"
                     value={formData.linkedinLink}
                     onChange={(e) => handleInputChange('linkedinLink', e.target.value)}
                     placeholder="https://linkedin.com/in/yourprofile"
                     className="w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+                    required
                   />
                 </div>
               </div>
