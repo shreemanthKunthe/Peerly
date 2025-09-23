@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect, updateProfile } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import { createSession } from "@/lib/api";
 
@@ -41,10 +41,19 @@ export default function SignUp() {
     setError(null);
     setLoading(true);
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const idToken = await result.user.getIdToken(true);
-      await createSession(idToken);
-      navigate("/questionnaire");
+      try {
+        const result = await signInWithPopup(auth, googleProvider);
+        const idToken = await result.user.getIdToken(true);
+        await createSession(idToken);
+        navigate("/questionnaire");
+      } catch (err: any) {
+        const code = err?.code || "";
+        if (code.includes("popup") || code.includes("operation-not-supported")) {
+          await signInWithRedirect(auth, googleProvider);
+          return; // Redirecting away
+        }
+        throw err;
+      }
     } catch (err: any) {
       setError(err?.message || "Google sign up failed");
     } finally {

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, signInWithRedirect, getRedirectResult } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import { createSession } from "@/lib/api";
 
@@ -34,7 +34,18 @@ export default function SignIn() {
     setError(null);
     setLoading(true);
     try {
-      await signInWithPopup(auth, googleProvider);
+      try {
+        await signInWithPopup(auth, googleProvider);
+      } catch (err: any) {
+        const code = err?.code || "";
+        if (code.includes("popup") || code.includes("operation-not-supported")) {
+          // Fallback to redirect flow when popup fails or is blocked
+          await signInWithRedirect(auth, googleProvider);
+          return; // Redirecting away
+        }
+        throw err;
+      }
+
       const idToken = await auth.currentUser!.getIdToken(true);
       await createSession(idToken);
       navigate("/questionnaire");

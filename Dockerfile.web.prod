@@ -17,10 +17,23 @@ COPY tsconfig.json ./tsconfig.json
 COPY postcss.config.js ./postcss.config.js
 COPY tailwind.config.ts ./tailwind.config.ts
 
-# Optionally allow overriding API base at build time
-# If not provided, app will use relative "/api"
+# Inject Vite envs at build time (VITE_* are embedded into the bundle)
+# If not provided, app will use relative "/api" and Firebase will fail to init.
 ARG VITE_API_BASE
-ENV VITE_API_BASE=${VITE_API_BASE}
+ARG VITE_FIREBASE_API_KEY
+ARG VITE_FIREBASE_AUTH_DOMAIN
+ARG VITE_FIREBASE_PROJECT_ID
+ARG VITE_FIREBASE_APP_ID
+ARG VITE_FIREBASE_MESSAGING_SENDER_ID
+ARG VITE_FIREBASE_STORAGE_BUCKET
+
+ENV VITE_API_BASE=${VITE_API_BASE} \
+    VITE_FIREBASE_API_KEY=${VITE_FIREBASE_API_KEY} \
+    VITE_FIREBASE_AUTH_DOMAIN=${VITE_FIREBASE_AUTH_DOMAIN} \
+    VITE_FIREBASE_PROJECT_ID=${VITE_FIREBASE_PROJECT_ID} \
+    VITE_FIREBASE_APP_ID=${VITE_FIREBASE_APP_ID} \
+    VITE_FIREBASE_MESSAGING_SENDER_ID=${VITE_FIREBASE_MESSAGING_SENDER_ID} \
+    VITE_FIREBASE_STORAGE_BUCKET=${VITE_FIREBASE_STORAGE_BUCKET}
 
 RUN pnpm run build:client
 
