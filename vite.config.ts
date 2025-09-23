@@ -3,9 +3,10 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 // https://vitejs.dev/config/
-export default defineConfig(() => {
+export default defineConfig(({ command }) => {
   const apiProxy = process.env.VITE_API_PROXY;
-  const useEmbeddedExpress = !apiProxy; // if proxy is provided, do not embed express
+  const isDev = command === "serve";
+  const useEmbeddedExpress = isDev && !apiProxy; // only embed express during dev serve
   return {
     server: {
       host: "::",
