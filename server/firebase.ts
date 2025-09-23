@@ -5,14 +5,15 @@ import fs from "fs";
 // ADC) or a JSON string in FIREBASE_SERVICE_ACCOUNT_JSON.
 // Also uses FIREBASE_PROJECT_ID when needed.
 
-let initialized = false;
-
 export function getFirebaseAdmin() {
-  if (!initialized) {
-    const saB64 = process.env.FIREBASE_SERVICE_ACCOUNT_BASE64;
-    const saJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+  // If already initialized (e.g., due to dev server reloads/HMR), reuse it
+  if (admin.apps && admin.apps.length > 0) {
+    return admin;
+  }
+  const saB64 = process.env.FIREBASE_SERVICE_ACCOUNT_BASE64;
+  const saJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
 
-    if (saB64) {
+  if (saB64) {
       let creds: any;
       try {
         const decoded = Buffer.from(saB64, "base64").toString("utf8");
@@ -27,7 +28,7 @@ export function getFirebaseAdmin() {
         credential: admin.credential.cert(creds),
         projectId,
       });
-    } else if (saJson) {
+  } else if (saJson) {
       let creds: any;
       try {
         let trimmed = saJson.trim();
@@ -85,15 +86,13 @@ export function getFirebaseAdmin() {
         credential: admin.credential.cert(creds),
         projectId,
       });
-    } else {
+  } else {
       // Fallback to default application credentials (GOOGLE_APPLICATION_CREDENTIALS)
       console.log('[firebase-admin] init via ADC, projectId=', process.env.FIREBASE_PROJECT_ID);
       admin.initializeApp({
         credential: admin.credential.applicationDefault(),
         projectId: process.env.FIREBASE_PROJECT_ID,
       });
-    }
-    initialized = true;
   }
   return admin;
 }

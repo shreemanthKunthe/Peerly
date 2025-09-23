@@ -31,3 +31,7 @@ export async function setRole(role: 'seeker' | 'guider') {
     body: JSON.stringify({ role }),
   });
 }
+
+export async function logout() {
+  return api('/api/auth/logout', { method: 'POST' });
+}
