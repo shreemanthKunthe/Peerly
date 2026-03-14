@@ -1,0 +1,86 @@
+# GraphQL Schema Definition for Peerly Gateway
+
+directive @hasRole(role: Role!) on FIELD_DEFINITION
+
+enum Role {
+  SEEKER
+  GUIDER
+  ADMIN
+}
+
+# --- Types ---
+
+type User {
+  id: ID!
+  email: String!
+  googleId: String
+  roles: [Role!]!
+  profile: Profile
+}
+
+type Profile {
+  displayName: String
+  bio: String
+  avatarUrl: String
+}
+
+type AuthResponse {
+  accessToken: String!
+  expiresIn: Int!
+  userId: ID!
+}
+
+# --- Inputs ---
+
+input UpsertProfileInput {
+  displayName: String
+  bio: String
+  avatarUrl: String
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  displayName: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+# --- Operations ---
+
+type Query {
+  # Public: verify if the system is up
+  ping: String!
+  
+  # Protected: get the currently authenticated user's details
+  me: User! @hasRole(role: SEEKER)
+
+  # Protected: get a specific user by ID
+  user(id: ID!): User! @hasRole(role: SEEKER)
+}
+
+type Mutation {
+  # Public: Authenticate via Firebase Google Sign-In
+  loginWithFirebase(idToken: String!): AuthResponse!
+  
+  # Public: Register a new account natively
+  registerNative(input: RegisterInput!): AuthResponse!
+  
+  # Public: Log in to an existing native account
+  loginNative(input: LoginInput!): AuthResponse!
+  
+  # Public: Use the HTTP-only cookie to get a new access token
+  refreshToken: AuthResponse!
+
+  # Protected
+  logout: Boolean!
+  
+  # Protected: Role Restricted
+  upsertProfile(input: UpsertProfileInput!): Profile! @hasRole(role: SEEKER)
+
+  # Protected: Update the current user's role (SEEKER or GUIDER)
+  setRole(role: Role!): Boolean! @hasRole(role: SEEKER)
+}

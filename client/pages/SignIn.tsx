@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { signInWithEmailAndPassword, signInWithPopup, signInWithRedirect, getRedirectResult } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
-import { createSession } from "@/lib/api";
+import { createSession, loginNative } from "@/lib/api";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -19,9 +19,10 @@ export default function SignIn() {
     setError(null);
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      const idToken = await auth.currentUser!.getIdToken(true);
-      await createSession(idToken);
+      const data = await loginNative({ email, password });
+      if (data?.errors) {
+        throw new Error(data.errors[0]?.message || "GraphQL Login Error");
+      }
       navigate("/questionnaire");
     } catch (err: any) {
       setError(err?.message || "Failed to sign in");
@@ -109,11 +110,10 @@ export default function SignIn() {
                     />
                     <label
                       htmlFor="email"
-                      className={`absolute left-3 transition-all duration-200 pointer-events-none ${
-                        email || document.activeElement?.id === "email"
+                      className={`absolute left-3 transition-all duration-200 pointer-events-none ${email || document.activeElement?.id === "email"
                           ? "-top-2 text-xs bg-black px-1 text-blue-500"
                           : "top-3 text-gray-400"
-                      }`}
+                        }`}
                     >
                       Email
                     </label>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect, updateProfile, getRedirectResult } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
-import { createSession } from "@/lib/api";
+import { createSession, registerNative } from "@/lib/api";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -20,15 +20,18 @@ export default function SignUp() {
     setError(null);
     setLoading(true);
     try {
-      // Create Firebase user
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
-      // Set display name if provided
-      if (name) {
-        await updateProfile(cred.user, { displayName: name });
+      // Create user via Go Microservice using native auth
+      const data = await registerNative({
+        email,
+        password,
+        displayName: name
+      });
+
+      if (data?.errors) {
+        throw new Error(data.errors[0]?.message || "GraphQL Registration Error");
       }
-      // Mint backend session cookie
-      const idToken = await cred.user.getIdToken(true);
-      await createSession(idToken);
+
+      // The session token is returned in data.data.registerNative.accessToken
       navigate("/questionnaire");
     } catch (err: any) {
       setError(err?.message || "Failed to sign up");
@@ -131,11 +134,10 @@ export default function SignUp() {
                     />
                     <label
                       htmlFor="name"
-                      className={`absolute left-3 transition-all duration-200 pointer-events-none ${
-                        name || document.activeElement?.id === "name"
-                          ? "-top-2 text-xs bg-black px-1 text-blue-500"
-                          : "top-3 text-gray-400"
-                      }`}
+                      className={`absolute left-3 transition-all duration-200 pointer-events-none ${name || document.activeElement?.id === "name"
+                        ? "-top-2 text-xs bg-black px-1 text-blue-500"
+                        : "top-3 text-gray-400"
+                        }`}
                     >
                       Name
                     </label>
@@ -154,11 +156,10 @@ export default function SignUp() {
                     />
                     <label
                       htmlFor="email"
-                      className={`absolute left-3 transition-all duration-200 pointer-events-none ${
-                        email || document.activeElement?.id === "email"
-                          ? "-top-2 text-xs bg-black px-1 text-blue-500"
-                          : "top-3 text-gray-400"
-                      }`}
+                      className={`absolute left-3 transition-all duration-200 pointer-events-none ${email || document.activeElement?.id === "email"
+                        ? "-top-2 text-xs bg-black px-1 text-blue-500"
+                        : "top-3 text-gray-400"
+                        }`}
                     >
                       Email
                     </label>
