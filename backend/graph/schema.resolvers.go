@@ -68,7 +68,7 @@ func (r *mutationResolver) Logout(ctx context.Context) (bool, error) {
 func (r *mutationResolver) UpsertProfile(ctx context.Context, input model.UpsertProfileInput) (*model.Profile, error) {
 	userIDVal := ctx.Value(middleware.SubContextKey)
 	if userIDVal == nil {
-		return nil, fmt.Errorf("unauthenticated")
+		return nil, fmt.Errorf("unauthenticated: missing user context")
 	}
 	userID := userIDVal.(string)
 
@@ -96,7 +96,7 @@ func (r *mutationResolver) UpsertProfile(ctx context.Context, input model.Upsert
 func (r *mutationResolver) SetRole(ctx context.Context, role model.Role) (bool, error) {
 	userIDVal := ctx.Value(middleware.SubContextKey)
 	if userIDVal == nil {
-		return false, fmt.Errorf("unauthenticated")
+		return false, fmt.Errorf("unauthenticated: missing user context")
 	}
 	userID := userIDVal.(string)
 
@@ -115,7 +115,7 @@ func (r *queryResolver) Ping(ctx context.Context) (string, error) {
 func (r *queryResolver) Me(ctx context.Context) (*model.User, error) {
 	userIDVal := ctx.Value(middleware.SubContextKey)
 	if userIDVal == nil {
-		return nil, fmt.Errorf("unauthenticated")
+		return nil, fmt.Errorf("unauthenticated: missing user context")
 	}
 	userID := userIDVal.(string)
 

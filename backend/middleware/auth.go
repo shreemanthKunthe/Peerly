@@ -9,7 +9,6 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-// contextKey is a private type for context keys to avoid collisions.
 type contextKey string
 
 // Context keys for storing user data extracted from the JWT.
@@ -23,15 +22,14 @@ func JWTMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
-			log.Printf("[JWT] No Authorization header for %s %s", r.Method, r.URL.Path)
 			next.ServeHTTP(w, r)
 			return
 		}
 
 		parts := strings.Split(authHeader, "Bearer ")
 		if len(parts) != 2 {
-			log.Printf("[JWT] Malformed Bearer token: %s", authHeader)
-			http.Error(w, "Malformed token", http.StatusUnauthorized)
+			log.Printf("[JWT] Malformed Authorization header")
+			next.ServeHTTP(w, r)
 			return
 		}
 
@@ -39,19 +37,18 @@ func JWTMiddleware(next http.Handler) http.Handler {
 		token, _, err := new(jwt.Parser).ParseUnverified(tokenString, jwt.MapClaims{})
 		if err != nil {
 			log.Printf("[JWT] Parse error: %v", err)
-			http.Error(w, "Invalid token", http.StatusUnauthorized)
+			next.ServeHTTP(w, r)
 			return
 		}
 
 		if claims, ok := token.Claims.(jwt.MapClaims); ok {
 			ctx := r.Context()
 			if sub, ok := claims["sub"].(string); ok {
-				log.Printf("[JWT] Authorized user: %s", sub)
+				log.Printf("[JWT] Authenticated user: %s", sub)
 				ctx = context.WithValue(ctx, SubContextKey, sub)
 			} else {
-				log.Printf("[JWT] Warning: 'sub' claim missing or not a string")
+				log.Printf("[JWT] No 'sub' claim found in token")
 			}
-			
 			if roles, ok := claims["roles"].([]interface{}); ok {
 				var roleStrs []string
 				for _, role := range roles {
@@ -62,6 +59,8 @@ func JWTMiddleware(next http.Handler) http.Handler {
 				ctx = context.WithValue(ctx, RolesContextKey, roleStrs)
 			}
 			r = r.WithContext(ctx)
+		} else {
+			log.Printf("[JWT] Could not cast claims to MapClaims")
 		}
 
 		next.ServeHTTP(w, r)
