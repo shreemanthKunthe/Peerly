@@ -126,7 +126,7 @@ func main() {
 
 	// React SPA — serve the Vite build output (dist/) and fall-back to index.html
 	// for client-side routes handled by React Router.
-	frontendDistPath := "../dist/spa"
+	frontendDistPath := "../dist"
 	fs := http.FileServer(http.Dir(frontendDistPath))
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if _, err := os.Stat(frontendDistPath + r.URL.Path); os.IsNotExist(err) && r.URL.Path != "/" {
