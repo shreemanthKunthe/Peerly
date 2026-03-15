@@ -37,6 +37,9 @@ export async function createSession(idToken: string) {
       variables: { idToken }
     }),
   });
+  if (result?.errors) {
+    throw new Error(result.errors[0]?.message || 'Firebase Login Failed');
+  }
   const token = result?.data?.loginWithFirebase?.accessToken;
   if (token) localStorage.setItem('token', token);
   return result;

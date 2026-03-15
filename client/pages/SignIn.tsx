@@ -59,6 +59,11 @@ export default function SignIn() {
       const idToken = await auth.currentUser!.getIdToken(true);
       await createSession(idToken);
       const me = await refresh();
+      
+      if (!me) {
+        throw new Error("Failed to initialize user session");
+      }
+
       if (!me?.role) {
         navigate("/questionnaire");
       } else if (me.role === "guider") {
@@ -67,7 +72,8 @@ export default function SignIn() {
         navigate("/templates/seeker");
       }
     } catch (err: any) {
-      setError(err?.message || "Google sign-in failed");
+      console.error("Google Sign-In Error:", err);
+      setError(err?.message || "Failed to sign in with Google");
     } finally {
       setLoading(false);
     }
