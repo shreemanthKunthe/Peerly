@@ -1,10 +1,8 @@
 {
-  "version": 2,
   "installCommand": "pnpm install --no-frozen-lockfile",
   "buildCommand": "pnpm run build",
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
