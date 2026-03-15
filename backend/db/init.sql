@@ -34,3 +34,17 @@ CREATE TABLE IF NOT EXISTS refresh_tokens (
 
 -- Create an index to speed up the token cleanup job
 CREATE INDEX IF NOT EXISTS idx_refresh_tokens_expires_at ON refresh_tokens(expires_at);
+
+-- Create guider_profiles table for storing specific guider information
+CREATE TABLE IF NOT EXISTS guider_profiles (
+    user_id UUID PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+    name VARCHAR(255) NOT NULL,
+    usn VARCHAR(100),
+    bio TEXT,
+    domain VARCHAR(255),
+    portfolio_link VARCHAR(1024),
+    linkedin_link VARCHAR(1024),
+    profile_image_url VARCHAR(1024),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);

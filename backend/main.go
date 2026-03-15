@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -123,6 +125,80 @@ func main() {
 	// GraphQL API
 	mux.Handle("/graphql", tracedGraphQLHandler)
 	mux.Handle("/playground", playground.Handler("GraphQL Playground", "/graphql"))
+
+	// REST APIs (Missing Guider Profile Handling)
+	type GuiderProfilePayload struct {
+		Name            string `json:"name"`
+		USN             string `json:"usn"`
+		Bio             string `json:"bio"`
+		Domain          string `json:"domain"`
+		PortfolioLink   string `json:"portfolioLink"`
+		LinkedinLink    string `json:"linkedinLink"`
+		ProfileImageUrl string `json:"profileImageUrl"`
+	}
+
+	guiderProfileHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+		userIDVal := ctx.Value(middleware.SubContextKey)
+		if userIDVal == nil {
+			http.Error(w, `{"error":"unauthorized"}`, http.StatusUnauthorized)
+			return
+		}
+		userID := userIDVal.(string)
+
+		if r.Method == "GET" {
+			var p GuiderProfilePayload
+			err := dbpool.QueryRow(ctx, "SELECT name, usn, bio, domain, portfolio_link, linkedin_link, profile_image_url FROM guider_profiles WHERE user_id = $1", userID).Scan(
+				&p.Name, &p.USN, &p.Bio, &p.Domain, &p.PortfolioLink, &p.LinkedinLink, &p.ProfileImageUrl)
+			if err != nil {
+				w.Header().Set("Content-Type", "application/json")
+				w.Write([]byte(`{}`))
+				return
+			}
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(p)
+			return
+		}
+
+		if r.Method == "POST" {
+			bodyBytes, _ := io.ReadAll(r.Body)
+			var p GuiderProfilePayload
+			json.Unmarshal(bodyBytes, &p)
+
+			query := `
+				INSERT INTO guider_profiles (user_id, name, usn, bio, domain, portfolio_link, linkedin_link, profile_image_url)
+				VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+				ON CONFLICT (user_id) DO UPDATE SET
+					name=EXCLUDED.name, usn=EXCLUDED.usn, bio=EXCLUDED.bio, domain=EXCLUDED.domain, 
+					portfolio_link=EXCLUDED.portfolio_link, linkedin_link=EXCLUDED.linkedin_link, profile_image_url=EXCLUDED.profile_image_url,
+					updated_at=CURRENT_TIMESTAMP
+			`
+			_, err := dbpool.Exec(ctx, query, userID, p.Name, p.USN, p.Bio, p.Domain, p.PortfolioLink, p.LinkedinLink, p.ProfileImageUrl)
+
+			w.Header().Set("Content-Type", "application/json")
+			if err != nil {
+				http.Error(w, fmt.Sprintf(`{"error":"%s"}`, err.Error()), 500)
+				return
+			}
+			json.NewEncoder(w).Encode(p)
+			return
+		}
+	})
+
+	guiderImageHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == "POST" {
+			var payload struct {
+				DataUrl string `json:"dataUrl"`
+			}
+			json.NewDecoder(r.Body).Decode(&payload)
+			// Return back the raw DataUrl string to be saved directly into the profile text database
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(map[string]string{"url": payload.DataUrl})
+		}
+	})
+
+	mux.Handle("/api/guider/profile", middleware.JWTMiddleware(guiderProfileHandler))
+	mux.Handle("/api/guider/profile/image", middleware.JWTMiddleware(guiderImageHandler))
 
 	// React SPA — serve the Vite build output (dist/) and fall-back to index.html
 	// for client-side routes handled by React Router.
