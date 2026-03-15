@@ -3,7 +3,6 @@ dist
 .git
 .gitignore
 README.md
-.env
 .env.local
 .env.development
 .env.test
@@ -32,7 +31,6 @@ node_modules
 **/node_modules/**
 build
 data
-.env
 load-ids.txt
 
 server

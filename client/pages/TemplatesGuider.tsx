@@ -1,8 +1,15 @@
 import { useAuth } from "@/hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function TemplatesGuider() {
   const { user, logout, loading } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen bg-black text-white p-6">
       <div className="max-w-3xl mx-auto space-y-6">
@@ -17,7 +24,7 @@ export default function TemplatesGuider() {
 
         <div className="flex gap-3">
           <Link to="/" className="px-4 py-2 rounded border">Home</Link>
-          <button onClick={logout} disabled={loading} className="px-4 py-2 rounded bg-white text-black disabled:opacity-60">Logout</button>
+          <button onClick={handleLogout} disabled={loading} className="px-4 py-2 rounded bg-white text-black disabled:opacity-60 hover:bg-gray-200 transition-colors">Logout</button>
         </div>
       </div>
     </div>

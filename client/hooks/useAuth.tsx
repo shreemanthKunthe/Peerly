@@ -8,7 +8,7 @@ export type CurrentUser = { uid: string; role: "seeker" | "guider" | null } | nu
 interface AuthContextValue {
   user: CurrentUser;
   loading: boolean;
-  refresh: () => Promise<void>;
+  refresh: () => Promise<CurrentUser>;
   logout: () => Promise<void>;
 }
 
@@ -18,10 +18,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<CurrentUser>(null);
   const [loading, setLoading] = useState(true);
 
-  const load = async () => {
+  const load = async (): Promise<CurrentUser> => {
     try {
       const me = await getMe().catch(() => null);
       setUser(me ?? null);
+      return me ?? null;
     } finally {
       setLoading(false);
     }

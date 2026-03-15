@@ -4,9 +4,11 @@ import { Eye, EyeOff } from "lucide-react";
 import { signInWithEmailAndPassword, signInWithPopup, signInWithRedirect, getRedirectResult } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import { createSession, loginNative } from "@/lib/api";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const { refresh } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +25,14 @@ export default function SignIn() {
       if (data?.errors) {
         throw new Error(data.errors[0]?.message || "GraphQL Login Error");
       }
-      navigate("/questionnaire");
+      const me = await refresh();
+      if (!me?.role) {
+        navigate("/questionnaire");
+      } else if (me.role === "guider") {
+        navigate("/templates/guider");
+      } else {
+        navigate("/templates/seeker");
+      }
     } catch (err: any) {
       setError(err?.message || "Failed to sign in");
     } finally {
@@ -49,7 +58,14 @@ export default function SignIn() {
 
       const idToken = await auth.currentUser!.getIdToken(true);
       await createSession(idToken);
-      navigate("/questionnaire");
+      const me = await refresh();
+      if (!me?.role) {
+        navigate("/questionnaire");
+      } else if (me.role === "guider") {
+        navigate("/templates/guider");
+      } else {
+        navigate("/templates/seeker");
+      }
     } catch (err: any) {
       setError(err?.message || "Google sign-in failed");
     } finally {

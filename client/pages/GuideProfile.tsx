@@ -60,7 +60,7 @@ export default function GuideProfile() {
         linkedinLink: formData.linkedinLink,
         profileImageUrl
       });
-      navigate('/');
+      navigate('/templates/guider');
     } catch (e: any) {
       setError(e?.message || 'Failed to save profile');
     } finally {

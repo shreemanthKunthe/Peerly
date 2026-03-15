@@ -1,47 +1,39 @@
-version: "3.9"
+version: '3.9'
 
 services:
-  api:
-    container_name: peerly-api
-    build:
-      context: .
-      dockerfile: Dockerfile.api
-    env_file:
-      - .env
+  db:
+    image: postgres:15-alpine
+    container_name: peerly-postgres
     environment:
-      - PORT=8082
+      POSTGRES_USER: peerly_user
+      POSTGRES_PASSWORD: peerly_password
+      POSTGRES_DB: peerly_db
     ports:
-      - "8082:8082"
+      - "5433:5432"
     volumes:
-      - ./server:/app/server
-      - ./shared:/app/shared
-      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml:ro
-      - ./package.json:/app/package.json:ro
-      - pnpm-store:/root/.local/share/pnpm/store/v3
-    command: ["pnpm", "dev:server"]
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U peerly_user -d peerly_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  web:
-    container_name: peerly-web
+  app:
+    container_name: peerly-monolith
     build:
       context: .
-      dockerfile: Dockerfile.web
+      dockerfile: Dockerfile
     env_file:
       - .env
     environment:
-      - VITE_API_PROXY=http://api:8082
+      # Docker Compose network hostname for postgres is 'db'
+      - DATABASE_URL=postgres://peerly_user:peerly_password@db:5432/peerly_db?sslmode=disable
+      - PORT=8080
     ports:
       - "8080:8080"
     depends_on:
-      - api
-    volumes:
-      - ./client:/app/client
-      - ./shared:/app/shared
-      - ./index.html:/app/index.html:ro
-      - ./vite.config.ts:/app/vite.config.ts:ro
-      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml:ro
-      - ./package.json:/app/package.json:ro
-      - pnpm-store:/root/.local/share/pnpm/store/v3
-    command: ["pnpm", "dev", "--host", "0.0.0.0", "--port", "8080"]
+      db:
+        condition: service_healthy
 
 volumes:
-  pnpm-store:
+  pgdata:

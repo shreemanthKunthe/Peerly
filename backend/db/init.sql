@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
-        CREATE TYPE user_role AS ENUM ('SEEKER', 'ADMIN', 'MENTOR');
+        CREATE TYPE user_role AS ENUM ('SEEKER', 'ADMIN', 'GUIDER');
     END IF;
 END$$;
 

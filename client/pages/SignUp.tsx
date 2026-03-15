@@ -4,9 +4,11 @@ import { Eye, EyeOff } from "lucide-react";
 import { createUserWithEmailAndPassword, signInWithPopup, signInWithRedirect, updateProfile, getRedirectResult } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import { createSession, registerNative } from "@/lib/api";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const { refresh } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -32,7 +34,14 @@ export default function SignUp() {
       }
 
       // The session token is returned in data.data.registerNative.accessToken
-      navigate("/questionnaire");
+      const me = await refresh();
+      if (!me?.role) {
+        navigate("/questionnaire");
+      } else if (me.role === "guider") {
+        navigate("/templates/guider");
+      } else {
+        navigate("/templates/seeker");
+      }
     } catch (err: any) {
       setError(err?.message || "Failed to sign up");
     } finally {
@@ -47,8 +56,14 @@ export default function SignUp() {
         const result = await getRedirectResult(auth);
         if (result?.user) {
           const idToken = await result.user.getIdToken(true);
-          await createSession(idToken);
-          navigate("/questionnaire");
+          const me = await refresh();
+          if (!me?.role) {
+            navigate("/questionnaire");
+          } else if (me.role === "guider") {
+            navigate("/templates/guider");
+          } else {
+            navigate("/templates/seeker");
+          }
         }
       } catch {
         // ignore
@@ -65,7 +80,14 @@ export default function SignUp() {
         const result = await signInWithPopup(auth, googleProvider);
         const idToken = await result.user.getIdToken(true);
         await createSession(idToken);
-        navigate("/questionnaire");
+        const me = await refresh();
+        if (!me?.role) {
+          navigate("/questionnaire");
+        } else if (me.role === "guider") {
+          navigate("/templates/guider");
+        } else {
+          navigate("/templates/seeker");
+        }
       } catch (err: any) {
         const code = err?.code || "";
         if (code.includes("popup") || code.includes("operation-not-supported")) {
