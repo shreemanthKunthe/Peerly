@@ -148,7 +148,7 @@ func main() {
 
 		if r.Method == "GET" {
 			var p GuiderProfilePayload
-			err := dbpool.QueryRow(ctx, "SELECT name, usn, bio, domain, portfolio_link, linkedin_link, profile_image_url FROM guider_profiles WHERE user_id = $1", userID).Scan(
+			err := db.QueryRow(ctx, "SELECT name, usn, bio, domain, portfolio_link, linkedin_link, profile_image_url FROM guider_profiles WHERE user_id = $1", userID).Scan(
 				&p.Name, &p.USN, &p.Bio, &p.Domain, &p.PortfolioLink, &p.LinkedinLink, &p.ProfileImageUrl)
 			if err != nil {
 				w.Header().Set("Content-Type", "application/json")
@@ -173,7 +173,7 @@ func main() {
 					portfolio_link=EXCLUDED.portfolio_link, linkedin_link=EXCLUDED.linkedin_link, profile_image_url=EXCLUDED.profile_image_url,
 					updated_at=CURRENT_TIMESTAMP
 			`
-			_, err := dbpool.Exec(ctx, query, userID, p.Name, p.USN, p.Bio, p.Domain, p.PortfolioLink, p.LinkedinLink, p.ProfileImageUrl)
+			_, err := db.Exec(ctx, query, userID, p.Name, p.USN, p.Bio, p.Domain, p.PortfolioLink, p.LinkedinLink, p.ProfileImageUrl)
 
 			w.Header().Set("Content-Type", "application/json")
 			if err != nil {
