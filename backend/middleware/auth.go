@@ -9,11 +9,9 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-type contextKey string
-
 // Context keys for storing user data extracted from the JWT.
-const RolesContextKey contextKey = "userRoles"
-const SubContextKey contextKey = "userID"
+const RolesContextKey = "userRoles"
+const SubContextKey = "userID"
 
 // JWTMiddleware extracts and parses the Bearer token from the Authorization header.
 // It injects the user's ID and roles into the request context so resolvers can read them.
@@ -26,43 +24,41 @@ func JWTMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		parts := strings.Split(authHeader, "Bearer ")
-		if len(parts) != 2 {
-			log.Printf("[JWT] Malformed Authorization header")
+		tokenString := ""
+		if len(authHeader) > 7 && strings.EqualFold(authHeader[:7], "Bearer ") {
+			tokenString = strings.TrimSpace(authHeader[7:])
+		}
+
+		if tokenString == "" {
 			next.ServeHTTP(w, r)
 			return
 		}
 
-		tokenString := parts[1]
-		token, _, err := new(jwt.Parser).ParseUnverified(tokenString, jwt.MapClaims{})
+		claims := jwt.MapClaims{}
+		_, _, err := new(jwt.Parser).ParseUnverified(tokenString, &claims)
 		if err != nil {
-			log.Printf("[JWT] Parse error: %v", err)
+			log.Printf("[JWT] Error parsing token: %v", err)
 			next.ServeHTTP(w, r)
 			return
 		}
 
-		if claims, ok := token.Claims.(jwt.MapClaims); ok {
-			ctx := r.Context()
-			if sub, ok := claims["sub"].(string); ok {
-				log.Printf("[JWT] Authenticated user: %s", sub)
-				ctx = context.WithValue(ctx, SubContextKey, sub)
-			} else {
-				log.Printf("[JWT] No 'sub' claim found in token")
-			}
-			if roles, ok := claims["roles"].([]interface{}); ok {
-				var roleStrs []string
-				for _, role := range roles {
-					if strRole, ok := role.(string); ok {
-						roleStrs = append(roleStrs, strRole)
-					}
-				}
-				ctx = context.WithValue(ctx, RolesContextKey, roleStrs)
-			}
-			r = r.WithContext(ctx)
-		} else {
-			log.Printf("[JWT] Could not cast claims to MapClaims")
+		ctx := r.Context()
+		if sub, ok := claims["sub"].(string); ok {
+			ctx = context.WithValue(ctx, SubContextKey, sub)
+		} else if uid, ok := claims["user_id"].(string); ok {
+			ctx = context.WithValue(ctx, SubContextKey, uid)
 		}
 
-		next.ServeHTTP(w, r)
+		if roles, ok := claims["roles"].([]interface{}); ok {
+			var roleStrs []string
+			for _, role := range roles {
+				if strRole, ok := role.(string); ok {
+					roleStrs = append(roleStrs, strRole)
+				}
+			}
+			ctx = context.WithValue(ctx, RolesContextKey, roleStrs)
+		}
+
+		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

@@ -33,12 +33,9 @@ RUN apk --no-cache add ca-certificates tzdata
 COPY --from=backend-builder /app/main .
 COPY --from=backend-builder /app/run_migrate .
 COPY --from=backend-builder /app/db ./db
-COPY --from=frontend-builder /app/dist ./dist
+COPY --from=frontend-builder /app/vercel_dist ./vercel_dist
 
-# The monolith server will serve from "../dist/spa" based on its pathing, but since we are running it in /app and the static files are in /app/dist/spa, let's adjust it
-# Wait, main.go looks for "../dist/spa". If the working directory is /app, "../dist/spa" corresponds to "/dist/spa". So we should put the frontend build output where main.go expects it. 
-# Actually, let's just create the folder structure to match local:
-# Local: backend/main.go looks for "../dist/spa". Let's put the binary in /app/backend/ and dist in /app/dist/spa
+# Put backend components in a standard location
 RUN mkdir -p /app/backend
 RUN mv main /app/backend/
 RUN mv run_migrate /app/backend/
@@ -49,4 +46,4 @@ WORKDIR /app/backend
 EXPOSE 8080
 
 # The startup command runs DB migrations first, then boots the main Go router
-CMD ["sh", "-c", "./run_migrate && ./main"]
+CMD ["sh", "-c", "SPA_DIST_PATH=/app/vercel_dist ./run_migrate && SPA_DIST_PATH=/app/vercel_dist ./main"]

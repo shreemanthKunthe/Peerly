@@ -202,7 +202,10 @@ func main() {
 
 	// React SPA — serve the Vite build output (dist/) and fall-back to index.html
 	// for client-side routes handled by React Router.
-	frontendDistPath := "../vercel_dist"
+	frontendDistPath := os.Getenv("SPA_DIST_PATH")
+	if frontendDistPath == "" {
+		frontendDistPath = "../vercel_dist"
+	}
 	fs := http.FileServer(http.Dir(frontendDistPath))
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if _, err := os.Stat(frontendDistPath + r.URL.Path); os.IsNotExist(err) && r.URL.Path != "/" {
@@ -218,10 +221,15 @@ func main() {
 	log.Printf("  → React SPA:       http://localhost:%s/", port)
 
 	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
+		AllowedOrigins: []string{
+			"http://localhost:5173",
+			"https://peerly-mu.vercel.app",
+			"https://peerly-shreemanth-kunthes-projects.vercel.app",
+		},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-Requested-With"},
-		AllowCredentials: false,
+		AllowCredentials: true,
+		Debug:            true, // Enable debug logs to catch CORS issues on Render
 	})
 	handler := corsMiddleware.Handler(mux)
 
