@@ -2,15 +2,19 @@ package middleware
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"strings"
 
 	"github.com/golang-jwt/jwt/v5"
 )
 
+// contextKey is a private type for context keys to avoid collisions.
+type contextKey string
+
 // Context keys for storing user data extracted from the JWT.
-const RolesContextKey = "userRoles"
-const SubContextKey = "userID"
+const RolesContextKey contextKey = "userRoles"
+const SubContextKey contextKey = "userID"
 
 // JWTMiddleware extracts and parses the Bearer token from the Authorization header.
 // It injects the user's ID and roles into the request context so resolvers can read them.
@@ -19,29 +23,35 @@ func JWTMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
+			log.Printf("[JWT] No Authorization header for %s %s", r.Method, r.URL.Path)
 			next.ServeHTTP(w, r)
 			return
 		}
 
 		parts := strings.Split(authHeader, "Bearer ")
 		if len(parts) != 2 {
+			log.Printf("[JWT] Malformed Bearer token: %s", authHeader)
 			http.Error(w, "Malformed token", http.StatusUnauthorized)
 			return
 		}
 
 		tokenString := parts[1]
-
-		// ParseUnverified is used here for the monolith — the same process signed the token,
-		// so for simplicity we trust it. In production swap this for proper RS256 verification
-		// with the public key from the in-memory `privateKey` in the auth package.
 		token, _, err := new(jwt.Parser).ParseUnverified(tokenString, jwt.MapClaims{})
 		if err != nil {
+			log.Printf("[JWT] Parse error: %v", err)
 			http.Error(w, "Invalid token", http.StatusUnauthorized)
 			return
 		}
 
 		if claims, ok := token.Claims.(jwt.MapClaims); ok {
 			ctx := r.Context()
+			if sub, ok := claims["sub"].(string); ok {
+				log.Printf("[JWT] Authorized user: %s", sub)
+				ctx = context.WithValue(ctx, SubContextKey, sub)
+			} else {
+				log.Printf("[JWT] Warning: 'sub' claim missing or not a string")
+			}
+			
 			if roles, ok := claims["roles"].([]interface{}); ok {
 				var roleStrs []string
 				for _, role := range roles {
@@ -50,9 +60,6 @@ func JWTMiddleware(next http.Handler) http.Handler {
 					}
 				}
 				ctx = context.WithValue(ctx, RolesContextKey, roleStrs)
-			}
-			if sub, ok := claims["sub"].(string); ok {
-				ctx = context.WithValue(ctx, SubContextKey, sub)
 			}
 			r = r.WithContext(ctx)
 		}
