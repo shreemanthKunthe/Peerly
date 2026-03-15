@@ -141,13 +141,13 @@ func main() {
 	log.Printf("  → Playground:      http://localhost:%s/playground", port)
 	log.Printf("  → React SPA:       http://localhost:%s/", port)
 
-	c := cors.New(cors.Options{
+	corsMiddleware := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"*"},
 		AllowCredentials: true,
 	})
-	handler := c.Handler(mux)
+	handler := corsMiddleware.Handler(mux)
 
 	log.Fatal(http.ListenAndServe(":"+port, handler))
 }
