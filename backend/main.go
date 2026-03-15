@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	firebase "firebase.google.com/go/v4"
 	"github.com/99designs/gqlgen/graphql"
@@ -62,9 +63,18 @@ func main() {
 	// ── Firebase Admin SDK ─────────────────────────────────────────────────────
 	// Point FIREBASE_SERVICE_ACCOUNT_JSON env variable at your service-account JSON file.
 	var firebaseApp *firebase.App
-	firebaseCredPath := os.Getenv("FIREBASE_SERVICE_ACCOUNT_JSON")
-	if firebaseCredPath != "" {
-		opt := option.WithCredentialsFile(firebaseCredPath)
+	firebaseCreds := os.Getenv("FIREBASE_SERVICE_ACCOUNT_JSON")
+	if firebaseCreds != "" {
+		var opt option.ClientOption
+		// If the string starts with '{', treat it as raw JSON.
+		// Otherwise, treat it as a file path.
+		trimmed := strings.TrimSpace(firebaseCreds)
+		if strings.HasPrefix(trimmed, "{") {
+			opt = option.WithCredentialsJSON([]byte(trimmed))
+		} else {
+			opt = option.WithCredentialsFile(trimmed)
+		}
+
 		firebaseApp, err = firebase.NewApp(ctx, nil, opt)
 		if err != nil {
 			log.Printf("Warning: Firebase init failed (%v) — Google Sign-In will be unavailable", err)
